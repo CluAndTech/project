@@ -19,7 +19,7 @@ var creer = function (req, res, query) {
 	{
 	lobby.membres = [];
 	lobby.membres.push(query.compte);
-	all_lobby.push(compte+".json");
+	all_lobby.push(compte + ".json");
 	contenu_lobby = JSON.stringify(lobby);
 	fs.writeFileSync(compte+".json", contenu_lobby, 'UTF-8');
 	contenu_all_lobby = JSON.stringify(all_lobby);
@@ -45,7 +45,24 @@ var creer = function (req, res, query) {
 	page = page.supplant(marqueurs);
 	}
 
-	
+	if (query.action === "rejoindre")
+	{
+		all_lobby = fs.readFileSync("lobby.json", "UTF-8");
+		all_lobby = JSON.parse(all_lobby);
+
+		var idx;
+		for (idx = 0; idx < all_lobby.length; idx++)
+		{
+			if (all_lobby[idx] === query.host + ".json")
+			{
+				lobby = fs.readFileSync(all_lobby[idx], "UTF-8");
+				lobby = JSON.parse(lobby);
+				lobby.membres.push(query.compte);
+				lobby = JSON.stringify(lobby);
+				fs.writeFileSync(all_lobby[idx], "UTF-8");
+			}
+		}
+	}
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.write(page);
