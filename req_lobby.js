@@ -3,6 +3,7 @@
 var fs = require("fs");
 require('remedial');
 var lobby = {};
+var all_lobby = [];
 
 var creer = function (req, res, query) {
 
@@ -11,14 +12,18 @@ var creer = function (req, res, query) {
 	var idx;
 	var compte = query.compte;
 	var contenu_lobby;
+	var contenu_all_lobby;
 	page = fs.readFileSync('attente_lobby.html', 'UTF-8');
 
 	if(query.action === "creer")
 	{
 	lobby.membres = [];
 	lobby.membres.push(query.compte);
+	all_lobby.push(compte+".json");
 	contenu_lobby = JSON.stringify(lobby);
 	fs.writeFileSync(compte+".json", contenu_lobby, 'UTF-8');
+	contenu_all_lobby = JSON.stringify(all_lobby);
+	fs.writeFileSync("lobby.json", contenu_all_lobby, 'UTF-8');
 
 	marqueurs = {};
 	marqueurs.compte = query.compte;
