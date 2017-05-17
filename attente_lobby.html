@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+<meta http-equiv="refresh" content="5; lobby?compte={compte}&action=attendre">
+</head>
+
+<h2>Lobby :</h2>
+
+<p/>
+Votre lobby : <em>{compte}<em>
+</p>
+<br/>
+Joueur(s) dans la partie :<br/>
+{joueurs}
+<form action="/lobby" method="GET">
+<input type="hidden" name="compte" value={compte}>
+</form>
+
+
+</html>
