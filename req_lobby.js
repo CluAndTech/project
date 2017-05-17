@@ -18,7 +18,7 @@ var creer = function (req, res, query) {
 	lobby.membres = [];
 	lobby.membres.push(query.compte);
 	contenu_lobby = JSON.stringify(lobby);
-	fs.writeFileSync("lobby.json", contenu_lobby, 'UTF-8');
+	fs.writeFileSync(compte+".json", contenu_lobby, 'UTF-8');
 
 	marqueurs = {};
 	marqueurs.compte = query.compte;
@@ -27,7 +27,7 @@ var creer = function (req, res, query) {
 	}
 	if(query.action === "attendre")
 	{
-	contenu_lobby = fs.readFileSync("lobby.json", 'UTF-8');
+	contenu_lobby = fs.readFileSync(compte+".json", 'UTF-8');
 	lobby = JSON.parse(contenu_lobby);
 	marqueurs = {};
 	marqueurs.compte = query.compte;
