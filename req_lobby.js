@@ -27,15 +27,17 @@ var creer = function (req, res, query) {
 
 	marqueurs = {};
 	marqueurs.compte = query.compte;
+	marqueurs.hote = query.compte;
 	marqueurs.joueurs = "";
 	page = page.supplant(marqueurs);
 	}
 	if(query.action === "attendre")
 	{
-	contenu_lobby = fs.readFileSync(compte+".json", 'UTF-8');
+	contenu_lobby = fs.readFileSync(query.hote+".json", 'UTF-8');
 	lobby = JSON.parse(contenu_lobby);
 	marqueurs = {};
 	marqueurs.compte = query.compte;
+	marqueurs.hote = query.hote;
 	marqueurs.joueurs = lobby.membres[0];
 	for(idx=1; idx<lobby.membres.length; idx++)
 	{
@@ -47,21 +49,18 @@ var creer = function (req, res, query) {
 
 	if (query.action === "rejoindre")
 	{
-		all_lobby = fs.readFileSync("lobby.json", "UTF-8");
-		all_lobby = JSON.parse(all_lobby);
-
-		var idx;
-		for (idx = 0; idx < all_lobby.length; idx++)
-		{
-			if (all_lobby[idx] === query.host + ".json")
-			{
-				lobby = fs.readFileSync(all_lobby[idx], "UTF-8");
-				lobby = JSON.parse(lobby);
-				lobby.membres.push(query.compte);
-				lobby = JSON.stringify(lobby);
-				fs.writeFileSync(all_lobby[idx], "UTF-8");
-			}
-		}
+		contenu_lobby = fs.readFileSync(query.hote+".json", 'UTF-8');
+		lobby = {};
+		lobby = JSON.parse(contenu_lobby);
+		lobby.membres.push(query.compte);
+		contenu_lobby = JSON.stringify(lobby);
+		fs.writeFileSync(query.hote+".json", contenu_lobby, 'UTF-8');
+		marqueurs = {};
+		marqueurs.compte = query.compte;
+		marqueurs.joueurs = "";
+		marqueurs.hote = query.hote;
+		page = page.supplant(marqueurs);
+		
 	}
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
