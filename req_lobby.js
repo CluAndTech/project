@@ -19,6 +19,8 @@ var creer = function (req, res, query) {
 	{
 		lobby.membres = [];
 		lobby.membres.push(query.compte);
+		lobby.time = [];
+		lobby.time.push(Math.floor(Date.now() / 1000));
 		all_lobby.push(compte);
 		contenu_lobby = JSON.stringify(lobby);
 		fs.writeFileSync(compte+".json", contenu_lobby, 'UTF-8');
@@ -33,6 +35,7 @@ var creer = function (req, res, query) {
 	}
 	if(query.action === "attendre")
 	{
+		kick(query.hote, query.compte);
 		contenu_lobby = fs.readFileSync(query.hote+".json", 'UTF-8');
 		lobby = JSON.parse(contenu_lobby);
 		marqueurs = {};
@@ -49,10 +52,12 @@ var creer = function (req, res, query) {
 
 	if (query.action === "rejoindre")
 	{
+		kick(query.hote, query.compte);
 		contenu_lobby = fs.readFileSync(query.hote+".json", 'UTF-8');
 		lobby = {};
 		lobby = JSON.parse(contenu_lobby);
 		lobby.membres.push(query.compte);
+		lobby.time.push(Math.floor(Date.now() / 1000));
 		contenu_lobby = JSON.stringify(lobby);
 		fs.writeFileSync(query.hote+".json", contenu_lobby, 'UTF-8');
 		marqueurs = {};
