@@ -55,11 +55,22 @@ var trait = function (req, res, query) {
 		lobby = JSON.parse(lobby);
 		if(lobby[0] !== undefined)
 		{
-		marqueurs.lobby = lobby[0];
+			marqueurs.lobby = lobby[0];
+			marqueurs.bouton = "<form action=\"/lobby\" method=\"GET\">"
+				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
+				+"<input type=\"hidden\" name=\"hote\" value="+lobby[0]+">"
+				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby[0]+"</button>"
+				+"</form>"
 		}
 		for(idx=1; idx<lobby.length; idx++)
 		{
 			marqueurs.lobby += "<br/>" + lobby[idx];
+			marqueurs.bouton += "<form action=\"/lobby\" method=\"GET\">"
+				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
+				+"<input type=\"hidden\" name=\"hote\" value="+lobby[idx]+">"
+				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby[idx]+"</button>"
+				+"</form>"
+
 		}
 		marqueurs.compte = query.compte;
 		page = page.supplant(marqueurs);
