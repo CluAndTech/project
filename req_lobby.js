@@ -17,34 +17,34 @@ var creer = function (req, res, query) {
 
 	if(query.action === "creer")
 	{
-	lobby.membres = [];
-	lobby.membres.push(query.compte);
-	all_lobby.push(compte);
-	contenu_lobby = JSON.stringify(lobby);
-	fs.writeFileSync(compte+".json", contenu_lobby, 'UTF-8');
-	contenu_all_lobby = JSON.stringify(all_lobby);
-	fs.writeFileSync("lobby.json", contenu_all_lobby, 'UTF-8');
+		lobby.membres = [];
+		lobby.membres.push(query.compte);
+		all_lobby.push(compte);
+		contenu_lobby = JSON.stringify(lobby);
+		fs.writeFileSync(compte+".json", contenu_lobby, 'UTF-8');
+		contenu_all_lobby = JSON.stringify(all_lobby);
+		fs.writeFileSync("lobby.json", contenu_all_lobby, 'UTF-8');
 
-	marqueurs = {};
-	marqueurs.compte = query.compte;
-	marqueurs.hote = query.compte;
-	marqueurs.joueurs = "";
-	page = page.supplant(marqueurs);
+		marqueurs = {};
+		marqueurs.compte = query.compte;
+		marqueurs.hote = query.compte;
+		marqueurs.joueurs = "";
+		page = page.supplant(marqueurs);
 	}
 	if(query.action === "attendre")
 	{
-	contenu_lobby = fs.readFileSync(query.hote+".json", 'UTF-8');
-	lobby = JSON.parse(contenu_lobby);
-	marqueurs = {};
-	marqueurs.compte = query.compte;
-	marqueurs.hote = query.hote;
-	marqueurs.joueurs = lobby.membres[0];
-	for(idx=1; idx<lobby.membres.length; idx++)
-	{
-		marqueurs.joueurs += "<br/>" + lobby.membres[idx];
-	}
-	console.log(lobby.membres);
-	page = page.supplant(marqueurs);
+		contenu_lobby = fs.readFileSync(query.hote+".json", 'UTF-8');
+		lobby = JSON.parse(contenu_lobby);
+		marqueurs = {};
+		marqueurs.compte = query.compte;
+		marqueurs.hote = query.hote;
+		marqueurs.joueurs = lobby.membres[0];
+		for(idx=1; idx<lobby.membres.length; idx++)
+		{
+			marqueurs.joueurs += "<br/>" + lobby.membres[idx];
+		}
+		console.log(lobby.membres);
+		page = page.supplant(marqueurs);
 	}
 
 	if (query.action === "rejoindre")
@@ -60,7 +60,26 @@ var creer = function (req, res, query) {
 		marqueurs.joueurs = "";
 		marqueurs.hote = query.hote;
 		page = page.supplant(marqueurs);
-		
+
+	}if (query.action === "lancement"){
+
+		var i;
+
+		contenu_lobby = fs.readFileSync(query.hote+".json", 'UTF-8');
+		lobby = JSON.parse(contenu_lobby);
+		marqueurs = {};
+		marqueurs.compte = query.compte;
+		marqueurs.hote = query.hote;
+
+		for(i=0;i<lobby.membres.length;i++){
+			if(query.hote=== lobby.membres[i] && query.compte === lobby.membres[i]){
+				page = fs.readFileSync("Plateau_actif.html","utf-8");
+				break;
+			}else if(query.hote === lobby.membres[i]&&query.compte!==lobby.membres[i]){
+				page = fs.readFileSync("Plateau_passif.html","utf-8");
+			}
+		}
+		page = page.supplant(marqueurs);
 	}
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
