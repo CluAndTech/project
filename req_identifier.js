@@ -49,8 +49,18 @@ var trait = function (req, res, query) {
 		// SI IDENTIFICATION OK, ON ENVOIE PAGE ACCUEIL MEMBRE
 
 		page = fs.readFileSync('modele_accueil_membre.html', 'UTF-8');
-
 		marqueurs = {};
+		var idx;
+		var lobby = fs.readFileSync('lobby.json', 'UTF-8');
+		lobby = JSON.parse(lobby);
+		if(lobby[0] !== undefined)
+		{
+		marqueurs.lobby = lobby[0];
+		}
+		for(idx=1; idx<lobby.length; idx++)
+		{
+			marqueurs.lobby += "<br/>" + lobby[idx];
+		}
 		marqueurs.compte = query.compte;
 		page = page.supplant(marqueurs);
 	}
