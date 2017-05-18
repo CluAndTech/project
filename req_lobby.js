@@ -19,7 +19,7 @@ var creer = function (req, res, query) {
 	{
 	lobby.membres = [];
 	lobby.membres.push(query.compte);
-	all_lobby.push(compte + ".json");
+	all_lobby.push(compte);
 	contenu_lobby = JSON.stringify(lobby);
 	fs.writeFileSync(compte+".json", contenu_lobby, 'UTF-8');
 	contenu_all_lobby = JSON.stringify(all_lobby);
