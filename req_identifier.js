@@ -55,7 +55,7 @@ var trait = function (req, res, query) {
 		lobby = JSON.parse(lobby);
 		if(lobby[0] !== undefined)
 		{
-			marqueurs.lobby = lobby[0];
+			marqueurs.lobby = "Lobby déja créé : <br/>" + lobby[0];
 			marqueurs.bouton = "<form action=\"/lobby\" method=\"GET\">"
 				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
 				+"<input type=\"hidden\" name=\"hote\" value="+lobby[0]+">"
