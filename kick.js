@@ -1,7 +1,7 @@
 /*
 ** File Name : kick.js
 ** Creation Date : 18-05-2017
-** Last Modified : Thu 18 May 2017 11:13:56 CEST
+** Last Modified : Mon 22 May 2017 14:00:27 CEST
 ** Created by : Melvin DELPIERRE
 ** NOTE : timeout players
 */
@@ -16,29 +16,28 @@ var kick = function (host, account) {
 	var idx;
 
 	actualTime = Math.floor(Date.now() /1000);
-	lobby = fs.readFileSync(host+".json", "UTF-8");
+	lobby = fs.readFileSync("lobby.json", "UTF-8");
 	lobby = JSON.parse(lobby);
 
-	for (idx = 0; idx < lobby.membres.length; idx++)
+	for (idx = 0; idx < lobby[host].joueurs.length; idx++)
 	{
-		if (account === lobby.membres[idx])
+		if (account === lobby[host].joueurs[idx])
 		{
-			lobby.time[idx] = actualTime;	
+			lobby[host].time[idx] = actualTime;	
 		}
 
-		delay = actualTime - lobby.time[idx];
-		console.log("delay = " + delay);
+		delay = actualTime - lobby[host].time[idx];
+		console.log(lobby[host].joueurs[idx] + "'s delay = " + delay);
 
 		if (delay > 10)
 		{
-			console.log('a');
-			lobby.membres.splice(idx, 1);
-			lobby.time.splice(idx, 1);
+			lobby[host].joueurs.splice(idx, 1);
+			lobby[host].time.splice(idx, 1);
 		}
 	}
 
 	lobby = JSON.stringify(lobby);
-	fs.writeFileSync(host+".json", lobby, "UTF-8");
+	fs.writeFileSync("lobby.json", lobby, "UTF-8");
 };
 
 module.exports = kick;
