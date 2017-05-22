@@ -31,6 +31,7 @@ var creer = function (req, res, query) {
 		lobby[compte].joueurs.push(query.compte);
 		lobby[compte].time = [];
 		lobby[compte].time.push(Math.floor(Date.now() / 1000));
+		lobby[compte].etat = "attente";
 		lobby.liste = [];
 		lobby.liste.push(compte);
 		lobby = JSON.stringify(lobby);
@@ -96,6 +97,7 @@ var creer = function (req, res, query) {
 
 		lobby = fs.readFileSync("lobby.json", "UTF-8");
 		lobby = JSON.parse(lobby);
+		lobby[hote].etat="en_cours";
 		marqueurs = {};
 		marqueurs.compte = compte;
 		marqueurs.hote = hote;
