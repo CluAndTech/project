@@ -62,7 +62,7 @@ var creer = function (req, res, query) {
 		console.log(compteur);
 		marqueurs.button = "";
 
-		if(compteur === 3){
+		if(compteur === 3 && compte === hote){
 
 			marqueurs.button = "<form action=\"/lobby\" method=\"GET\">"
 				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
@@ -70,6 +70,12 @@ var creer = function (req, res, query) {
 				+"<button name=\"action\" value=\"lancement\">Lancement "+"</button>"
 				+"</form>"
 
+		}
+		if(lobby[hote].etat !== "attente"){
+			page = fs.readFileSync("plateau_passif.html", "UTF-8");
+			marqueurs = {};
+			marqueurs.compte = compte;
+			marqueurs.hote = hote;
 		}
 		console.log(lobby[hote].joueurs);
 		page = page.supplant(marqueurs);
@@ -87,41 +93,28 @@ var creer = function (req, res, query) {
 		marqueurs = {};
 		marqueurs.compte = compte;
 		marqueurs.joueurs = "";
+		marqueurs.button = "";
 		marqueurs.hote = hote;
 		page = page.supplant(marqueurs);
 	}
 
 	if (query.action === "lancement")
-	{
-		var i;
-
+	{		
+		page = fs.readFileSync("plateau_actif.html", "UTF-8");
 		lobby = fs.readFileSync("lobby.json", "UTF-8");
 		lobby = JSON.parse(lobby);
 		lobby[hote].etat="en_cours";
+		lobby = JSON.stringify(lobby);
+		fs.writeFileSync("lobby.json", lobby, "UTF-8");
 		marqueurs = {};
 		marqueurs.compte = compte;
 		marqueurs.hote = hote;
-
-		for (i = 0; i < lobby[hote].joueurs.length; i++)
-		{
-			if (hote === lobby[hote].joueurs[i] &&
-				compte === lobby[hote].joueurs[i])
-			{
-				page = fs.readFileSync("plateau_actif.html", "UTF-8");
-				break;
-			}else if (hote === lobby[hote].joueurs[i] &&
-					  compte !== lobby[hote].joueurs[i])
-			{
-				page = fs.readFileSync("plateau_passif.html", "UTF-8");
-			}
-		}
 		page = page.supplant(marqueurs);
 	}
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.write(page);
 	res.end();
-
 };
 
 module.exports = creer;
