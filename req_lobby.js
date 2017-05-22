@@ -1,6 +1,7 @@
 "use strict";
 
 var fs = require("fs");
+var kick = require("./kick.js");
 require('remedial');
 var lobby = {};
 var all_lobby = [];
