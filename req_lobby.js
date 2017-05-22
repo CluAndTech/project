@@ -31,6 +31,8 @@ var creer = function (req, res, query) {
 		lobby[compte].joueurs.push(query.compte);
 		lobby[compte].time = [];
 		lobby[compte].time.push(Math.floor(Date.now() / 1000));
+		lobby.liste = [];
+		lobby.liste.push(compte);
 		lobby = JSON.stringify(lobby);
 		fs.writeFileSync("lobby.json", lobby, "UTF-8");
 

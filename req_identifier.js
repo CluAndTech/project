@@ -53,22 +53,22 @@ var trait = function (req, res, query) {
 		var idx;
 		var lobby = fs.readFileSync('lobby.json', 'UTF-8');
 		lobby = JSON.parse(lobby);
-		if(lobby[0] !== undefined)
+		if(lobby.liste[0] !== undefined)
 		{
-			marqueurs.lobby = "Lobby déja créé : <br/>" + lobby[0];
+			marqueurs.lobby = "Lobby déja créé : <br/>" + lobby.liste[0];
 			marqueurs.bouton = "<form action=\"/lobby\" method=\"GET\">"
 				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
-				+"<input type=\"hidden\" name=\"hote\" value="+lobby[0]+">"
-				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby[0]+"</button>"
+				+"<input type=\"hidden\" name=\"hote\" value="+lobby.liste[0]+">"
+				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby.liste[0]+"</button>"
 				+"</form>"
 		}
-		for(idx=1; idx<lobby.length; idx++)
+		for(idx=1; idx<lobby.liste.length; idx++)
 		{
-			marqueurs.lobby += "<br/>" + lobby[idx];
+			marqueurs.lobby += "<br/>" + lobby.liste[idx];
 			marqueurs.bouton += "<form action=\"/lobby\" method=\"GET\">"
 				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
-				+"<input type=\"hidden\" name=\"hote\" value="+lobby[idx]+">"
-				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby[idx]+"</button>"
+				+"<input type=\"hidden\" name=\"hote\" value="+lobby.liste[idx]+">"
+				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby.liste[idx]+"</button>"
 				+"</form>"
 
 		}
