@@ -12,7 +12,9 @@ var creer = function (req, res, query) {
 	var idx;
 	var compte = query.compte;
 	var contenu_lobby;
-	var contenu_all_lobby;
+	var contenu_all_lobby;i
+	var compteur;
+	var kick = require("./kick.js");
 	page = fs.readFileSync('attente_lobby.html', 'UTF-8');
 
 	if(query.action === "creer")
@@ -31,6 +33,7 @@ var creer = function (req, res, query) {
 		marqueurs.compte = query.compte;
 		marqueurs.hote = query.compte;
 		marqueurs.joueurs = "";
+		marqueurs.button = "";
 		page = page.supplant(marqueurs);
 	}
 	if(query.action === "attendre")
@@ -46,6 +49,20 @@ var creer = function (req, res, query) {
 		{
 			marqueurs.joueurs += "<br/>" + lobby.membres[idx];
 		}
+
+		compteur = lobby.membres.length;
+		console.log(compteur);
+		marqueurs.button = "";
+
+		if(compteur === 3){
+
+			marqueurs.button = "<form action=\"/lobby\" method=\"GET\">"
+					+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
+					+"<input type=\"hidden\" name=\"hote\" value="+query.hote+">"
+					+"<button name=\"action\" value=\"lancement\">Lancement "+"</button>"
+					+"</form>"
+
+			}
 		console.log(lobby.membres);
 		page = page.supplant(marqueurs);
 	}
