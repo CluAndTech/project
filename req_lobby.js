@@ -72,7 +72,7 @@ var creer = function (req, res, query) {
 
 		}
 		if(lobby[hote].etat !== "attente"){
-			page = fs.readFileSync("plateau_passif.html", "UTF-8");
+			page = fs.readFileSync("indication_passif.html", "UTF-8");
 			marqueurs = {};
 			marqueurs.compte = compte;
 			marqueurs.hote = hote;
@@ -100,7 +100,7 @@ var creer = function (req, res, query) {
 
 	if (query.action === "lancement")
 	{		
-		page = fs.readFileSync("plateau_actif.html", "UTF-8");
+		page = fs.readFileSync("indication_actif.html", "UTF-8");
 		lobby = fs.readFileSync("lobby.json", "UTF-8");
 		lobby = JSON.parse(lobby);
 		lobby[hote].etat="en_cours";

@@ -17,7 +17,7 @@ var req_lobby = require("./req_lobby.js");
 
 var req_static = require("./req_static.js");
 var req_erreur = require("./req_erreur.js");
-
+var req_jeu = require("./req_jeu.js");
 //-------------------------------------------------------------------------
 // FONCTION DE CALLBACK APPELLEE POUR CHAQUE REQUETE
 //-------------------------------------------------------------------------
@@ -53,6 +53,9 @@ var traite_requete = function (req, res) {
 				break;
 			case '/lobby':
 				req_lobby(req, res, query);
+				break;
+			case '/jeu':
+				req_jeu(req, res, query);
 				break;
 			default:
 				req_static(req, res, pathname);
