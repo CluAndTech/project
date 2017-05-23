@@ -27,7 +27,7 @@ cartes.armes[4] = "extincteur";
 cartes.armes[5] = "nokia 3310";
 cartes_copie = cartes;
 
-var generer_scenario = function(cartes){
+var generer_scenario = function(cartes_copie){
 
 var scenario = {};
 var random;
@@ -35,12 +35,17 @@ var random;
 random = Math.floor(Math.random() * 6);
 scenario.personnages = cartes_copie.personnages[random];
 cartes_copie.personnages.splice(random,1);
+
 random = Math.floor(Math.random() * 9);
 scenario.lieux = cartes_copie.lieux[random];
 cartes_copie.lieux.splice(random,1);
+
 random = Math.floor(Math.random() * 6);
 scenario.armes = cartes_copie.armes[random];
 cartes_copie.armes.splice(random,1);
+
+console.log(cartes_copie);
+
 return scenario;
 };
 
