@@ -86,8 +86,6 @@ var distribuer_carte = function(cartes)
 	for (idx = 0; idx < 3; idx++)
 	{
 		game.cartes[idx] = [];
-		console.log(cartes.personnages);
-		console.log(perso);
 		
 		if (idx === 0)
 		{
@@ -123,7 +121,6 @@ var distribuer_carte = function(cartes)
 		while (perso < persoMax)
 		{
 			game.cartes[idx].push(cartes.personnages[perso]);
-			console.log(cartes.personnages[perso]);
 			perso++;
 		}
 	}
