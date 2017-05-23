@@ -1,5 +1,6 @@
 var fs = require("fs");
 var cartes = {};
+var cartes_copie;
 cartes.personnages = [];
 cartes.personnages[0] = "mme Dorignac";
 cartes.personnages[1] = "m Thire";
@@ -24,17 +25,22 @@ cartes.armes[2] = "chaise";
 cartes.armes[3] = "cable RJ45";
 cartes.armes[4] = "extincteur";
 cartes.armes[5] = "nokia 3310";
+cartes_copie = cartes;
 
 var generer_scenario = function(cartes){
 
 var scenario = {};
 var random;
+
 random = Math.floor(Math.random() * 6);
-scenario.personnages = cartes.personnages[random];
+scenario.personnages = cartes_copie.personnages[random];
+cartes_copie.personnages.splice(random,1);
 random = Math.floor(Math.random() * 9);
-scenario.lieux = cartes.lieux[random];
+scenario.lieux = cartes_copie.lieux[random];
+cartes_copie.lieux.splice(random,1);
 random = Math.floor(Math.random() * 6);
-scenario.armes = cartes.armes[random];
+scenario.armes = cartes_copie.armes[random];
+cartes_copie.armes.splice(random,1);
 return scenario;
 };
 
@@ -45,16 +51,13 @@ for(idx = 0; idx < joueurs.length; idx++);
 {
 
 
-
 }
-
-
 };
 
 var generer_json = function(hote, joueurs){
 
-var scenario = generer_scenario(cartes);
-var cartes_joueurs = distribuer_cartes(cartes, joueurs);
+var scenario = generer_scenario(cartes_copie);
+var cartes_joueurs = distribuer_cartes(cartes_copie, joueurs);
 scenario = JSON.stringify(scenario);
 fs.writeFileSync(hote+".json", scenario, "UTF-8");
 
