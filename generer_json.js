@@ -1,3 +1,4 @@
+"use strict";
 var fs = require("fs");
 var cartes = {};
 var cartes_copie;
@@ -29,42 +30,54 @@ cartes_copie = cartes;
 
 var generer_scenario = function(cartes_copie){
 
-var scenario = {};
-var random;
+	var scenario = {};
+	var random;
 
-random = Math.floor(Math.random() * 6);
-scenario.personnages = cartes_copie.personnages[random];
-cartes_copie.personnages.splice(random,1);
+	random = Math.floor(Math.random() * 6);
+	scenario.personnages = cartes_copie.personnages[random];
+	cartes_copie.personnages.splice(random,1);
 
-random = Math.floor(Math.random() * 9);
-scenario.lieux = cartes_copie.lieux[random];
-cartes_copie.lieux.splice(random,1);
+	random = Math.floor(Math.random() * 9);
+	scenario.lieux = cartes_copie.lieux[random];
+	cartes_copie.lieux.splice(random,1);
 
-random = Math.floor(Math.random() * 6);
-scenario.armes = cartes_copie.armes[random];
-cartes_copie.armes.splice(random,1);
+	random = Math.floor(Math.random() * 6);
+	scenario.armes = cartes_copie.armes[random];
+	cartes_copie.armes.splice(random,1);
 
-console.log(cartes_copie);
-
-return scenario;
+	return scenario;
 };
 
-var distribuer_cartes = function(cartes, joueurs)
+var melanger_cartes = function(cartes)
 {
-var idx;
-for(idx = 0; idx < joueurs.length; idx++);
+	var idx;
+	var r1,r2,tempo;
+	for(idx = 0; idx < 20; idx++);
+	{
+		 r1 = Math.floor(Math.random() * cartes.length);
+		 r2 = Math.floor(Math.random() * cartes.length);
+		 tempo = cartes[r1];
+		 cartes[r1] = cartes[r2];
+		 cartes[r2] = tempo;
+	}
+	return cartes;
+};
+
+var distribuer_carte = function(cartes, joueurs)
 {
-
-
-}
+	var idx,idxx;
+	cartes.personnages = melanger_cartes(cartes.personnages);
+	cartes.lieux = melanger_cartes(cartes.lieux);
+	cartes.armes = melanger_cartes(cartes.armes);
+	for(idx=0; idx<joueurs.length; idx++)
 };
 
 var generer_json = function(hote, joueurs){
 
-var scenario = generer_scenario(cartes_copie);
-var cartes_joueurs = distribuer_cartes(cartes_copie, joueurs);
-scenario = JSON.stringify(scenario);
-fs.writeFileSync(hote+".json", scenario, "UTF-8");
+	var scenario = generer_scenario(cartes_copie);
+	var cartes_joueurs = distribuer_carte(cartes_copie, joueurs);
+	scenario = JSON.stringify(scenario);
+	fs.writeFileSync(hote+".json", scenario, "UTF-8");
 
 };
 
