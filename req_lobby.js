@@ -11,6 +11,7 @@
 
 var fs = require("fs");
 var kick = require("./kick.js");
+var generer_json = require("./generer_json.js");
 require('remedial');
 var lobby = {};
 
@@ -104,6 +105,7 @@ var creer = function (req, res, query) {
 		lobby = fs.readFileSync("lobby.json", "UTF-8");
 		lobby = JSON.parse(lobby);
 		lobby[hote].etat="en_cours";
+		generer_json(hote, lobby[hote].joueurs);
 		lobby = JSON.stringify(lobby);
 		fs.writeFileSync("lobby.json", lobby, "UTF-8");
 		marqueurs = {};
