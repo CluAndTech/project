@@ -30,19 +30,19 @@ cartes_copie = cartes;
 
 var generer_scenario = function(cartes_copie){
 
-	var scenario = {};
+	var scenario = [];
 	var random;
 
 	random = Math.floor(Math.random() * 6);
-	scenario.personnages = cartes_copie.personnages[random];
+	scenario[0] = cartes_copie.personnages[random];
 	cartes_copie.personnages.splice(random,1);
 
 	random = Math.floor(Math.random() * 9);
-	scenario.lieux = cartes_copie.lieux[random];
+	scenario[1] = cartes_copie.lieux[random];
 	cartes_copie.lieux.splice(random,1);
 
 	random = Math.floor(Math.random() * 6);
-	scenario.armes = cartes_copie.armes[random];
+	scenario[2] = cartes_copie.armes[random];
 	cartes_copie.armes.splice(random,1);
 
 	return scenario;
@@ -63,21 +63,79 @@ var melanger_cartes = function(cartes)
 	return cartes;
 };
 
-var distribuer_carte = function(cartes, joueurs)
+var distribuer_carte = function(cartes)
 {
-	var idx,idxx;
+	var arme = 0;
+	var armeMax;
+	var lieu = 0;
+	var lieuMax;
+	var perso = 0;
+	var persoMax;
+	var idx;
+	
+	var game;
+	game = {};
+	game.cartes = [];
+
+
+
 	cartes.personnages = melanger_cartes(cartes.personnages);
 	cartes.lieux = melanger_cartes(cartes.lieux);
 	cartes.armes = melanger_cartes(cartes.armes);
-	for(idx=0; idx<joueurs.length; idx++)
+
+	for (idx = 0; idx < 3; idx++)
+	{
+		game.cartes[idx] = [];
+		console.log(cartes.personnages);
+		console.log(perso);
+		
+		if (idx === 0)
+		{
+			lieuMax = 2;
+			armeMax = 2;
+			persoMax = 2;
+		}
+		else if (idx === 1)
+		{
+			lieuMax = 5;
+			armeMax = 3;
+			persoMax = 4;
+		}
+		else if (idx === 2)
+		{
+			lieuMax = 8;
+			armeMax = 5;
+			persoMax = 5;
+		}
+	
+		while (lieu < lieuMax)
+		{
+			game.cartes[idx].push(cartes.lieux[lieu]);
+			lieu++;
+		}
+
+		while (arme < armeMax)
+		{
+			game.cartes[idx].push(cartes.armes[arme]);
+			arme++;
+		}
+	
+		while (perso < persoMax)
+		{
+			game.cartes[idx].push(cartes.personnages[perso]);
+			console.log(cartes.personnages[perso]);
+			perso++;
+		}
+	}
+	return (game);
 };
 
 var generer_json = function(hote, joueurs){
-
 	var scenario = generer_scenario(cartes_copie);
-	var cartes_joueurs = distribuer_carte(cartes_copie, joueurs);
-	scenario = JSON.stringify(scenario);
-	fs.writeFileSync(hote+".json", scenario, "UTF-8");
+	var game = distribuer_carte(cartes_copie);
+	game.scenario = scenario;
+	game = JSON.stringify(game);
+	fs.writeFileSync(hote+".json", game, "UTF-8");
 
 };
 
