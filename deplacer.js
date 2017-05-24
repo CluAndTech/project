@@ -113,9 +113,6 @@ var display_grille = function(grille, cd) {
 			} else {
 				process.stdout.write(". ");
 			}
-			if(grille[l][c] === 2&&grille[l][c] === "* "){
-				process.stdout.write("o ");
-			}
 		}
 		console.log("");
 	}
