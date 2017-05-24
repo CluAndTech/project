@@ -28,30 +28,31 @@ var calcul_ca = function(grille, cd, n) {
 
 		ncd = {};
 
-		if(cd.l - 1 >= 1 && grille[cd.l - 1][cd.c] === 1) {
+		if(cd.l - 1 >= 1 && (grille[cd.l - 1][cd.c] === 1 || grille[cd.l - 1][cd.c] >=4)) {
 			ncd.l = cd.l - 1;
 			ncd.c = cd.c;
-			if(n > 1) {
+			if(n > 1 && grille_ca[ncd.l][ncd.c]<4) {
 				can(ncd, n-1);
 			} else {
 				grille_ca[ncd.l][ncd.c] = 2;
 			}
 		}
 
-		if(cd.l + 1 < grille.length && grille[cd.l + 1][cd.c] === 1) {
+
+		if(cd.l + 1 >= 1 && (grille[cd.l + 1][cd.c] === 1 || grille[cd.l + 1][cd.c] >=4)) {
 			ncd.l = cd.l + 1;
 			ncd.c = cd.c;
-			if(n > 1) {
+			if(n > 1 && grille_ca[ncd.l][ncd.c]<4) {
 				can(ncd, n-1);
 			} else {
 				grille_ca[ncd.l][ncd.c] = 2;
 			}
 		}
 
-		if(cd.c - 1 >= 1 && grille[cd.l][cd.c - 1] === 1) {
+		if(cd.c - 1 >= 1 &&(grille[cd.l][cd.c-1] === 1|| grille[cd.l][cd.c-1] >=4)) {
 			ncd.l = cd.l;
 			ncd.c = cd.c - 1;
-			if(n > 1) {
+			if(n > 1 && grille_ca[ncd.l][ncd.c]<4) {
 				can(ncd, n-1);
 			} else {
 				grille_ca[ncd.l][ncd.c] = 2;
@@ -59,10 +60,10 @@ var calcul_ca = function(grille, cd, n) {
 		}
 
 
-		if(cd.c + 1 < grille[cd.l].length && grille[cd.l][cd.c + 1] === 1) {
+		if(cd.c + 1 >= 1 &&(grille[cd.l][cd.c+1] === 1|| grille[cd.l][cd.c+1] >=4)) {
 			ncd.l = cd.l;
 			ncd.c = cd.c + 1;
-			if(n > 1) {
+			if(n > 1 && grille_ca[ncd.l][ncd.c]<4) {
 				can(ncd, n-1);
 			} else {
 				grille_ca[ncd.l][ncd.c] = 2;
