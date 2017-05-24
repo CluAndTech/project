@@ -90,25 +90,7 @@ var display_grille = function(grille, cd) {
 				process.stdout.write("o ");
 			} else if(grille[l][c] === 3) {
 				process.stdout.write("  ");
-			} else if(grille[l][c] === 4) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 5) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 6) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 7) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 8) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 9) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 10) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 11) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 12) {
-				process.stdout.write("* ");
-			} else if(grille[l][c] === 13) {
+			} else if(grille[l][c] >= 4) {
 				process.stdout.write("* ");
 			} else {
 				process.stdout.write(". ");
