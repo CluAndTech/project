@@ -9,6 +9,7 @@
 "use strict";
 
 var fs = require("fs");
+var deplacer = require("./req_deplacer.js");
 require('remedial');
 
 var jeu = function(req,res,query){
@@ -44,6 +45,7 @@ if(query.action === "lancerD"){
 marqueurs.FirstD = Number(Math.floor(Math.random()*6)+1);
 marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
 marqueurs.total = marqueurs.FirstD + marqueurs.SecondD;
+deplacer(marqueurs.total);
 page = fs.readFileSync("plateau_deplacement.html","utf-8");
 }
 
