@@ -135,7 +135,6 @@ grille = [
 ];
 
 process.stdout.write("? ");
-n = Number(kbd.getLineSync());
 
 cd = {"l": 7, "c": 11};
 grille_ca = calcul_ca(grille, cd, n);

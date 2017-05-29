@@ -45,7 +45,7 @@ if(query.action === "lancerD"){
 marqueurs.FirstD = Number(Math.floor(Math.random()*6)+1);
 marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
 marqueurs.total = marqueurs.FirstD + marqueurs.SecondD;
-deplacer(marqueurs.total);
+deplacer(Number(marqueurs.total));
 page = fs.readFileSync("plateau_deplacement.html","utf-8");
 }
 
