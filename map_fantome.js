@@ -66,7 +66,7 @@ var map = function (req, res, query) {
 		{
 		marqueurs.map += salle;
 		}
-		else if(grille[j][i] > 2 && grille[j][i] !== 3)
+		else if(grille[j][i] > 3)
 		{
 		marqueurs.map += salle;
 		}
