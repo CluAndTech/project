@@ -33,25 +33,58 @@ var grille = [
 
 ];
 
+var grille2 = [
+
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,3,3,3,3,3,0,14,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
+[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
+[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
+[0,3,3,3,3,3,0,1,1,1,13,3,3,3,3,3,3,13,1,0,0,3,3,0],
+[0,0,0,0,4,0,0,1,1,1,0,3,3,3,3,3,3,0,1,1,0,0,12,0],
+[0,1,1,1,1,1,1,1,1,1,0,0,13,0,0,13,0,0,1,1,1,1,1,0],
+[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+[0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
+[0,3,3,3,3,0,0,0,0,1,1,0,0,0,0,0,1,1,0,3,3,3,3,0],
+[0,3,3,3,3,3,3,3,0,1,1,0,3,3,3,0,1,1,0,3,3,3,3,0],
+[0,3,3,3,3,3,3,3,0,1,1,0,3,3,3,0,1,1,0,0,0,0,11,0],
+[0,3,3,3,3,3,3,3,5,1,1,0,3,3,3,0,1,1,1,1,1,1,1,0],
+[0,3,3,3,3,3,3,3,0,1,1,0,3,3,3,0,1,1,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,5,0,1,1,0,3,3,3,0,1,1,0,3,3,3,3,0],
+[0,15,1,1,1,1,1,1,1,1,1,0,3,3,3,0,1,0,0,3,3,3,3,0],
+[0,1,1,1,1,1,1,1,1,1,1,0,0,9,0,0,1,10,3,3,3,3,3,0],
+[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,3,3,3,3,0],
+[0,0,0,6,0,0,0,0,1,1,0,0,0,7,0,0,1,1,0,0,0,0,0,0],
+[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,1,1,1,1,1,0],
+[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,1,1,1,1,1,0],
+[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,8,0,0,0,0],
+[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,16,0,3,3,3,3,0],
+[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,3,3,3,3,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+
+];
 
 var map = function (req, res, query) {
 
 	var marqueurs;
 	var page;
-	var mur = "<img src=\"mur.png\"/>";
-	var couloir = "<img src=\"couloir.png\"/>";
-	var salle = "<img src=\"salle.png\"/>";
 
+	var mur = "<td style=\"background-image: url(mur.png);\"><img src=\"vide.png\">";
+	var couloir = "<td style=\"background-image: url(couloir.png);\"><img src=\"vide.png\">";
+	var salle = "<td style=\"background-image: url(salle.png);\"><img src=\"vide.png\">";
+	var pion1 = "<img src=\"pion1.png\"/>";
+	var pion2 = "<img src=\"pion2.png\"/>";
+	var pion3 = "<img src=\"pion3.png\"/>";
 	// AFFICHAGE DE LA PAGE D'ACCUEIL
 
 	page = fs.readFileSync('map_fantome.html', 'utf-8');
 
 	marqueurs = {};
 	var i,j;
-	marqueurs.map = "";
+	marqueurs.map = "<table>";
 	
 	for(j=0; j<25; j++)
 	{
+	marqueurs.map += "<tr>";
 	for(i=0; i<24; i++)
 	{
 		if(grille[j][i] === 0)
@@ -66,14 +99,27 @@ var map = function (req, res, query) {
 		{
 		marqueurs.map += salle;
 		}
-		else if(grille[j][i] > 3)
+		else if(grille[j][i] > 3&&grille[j][i]<14)
 		{
 		marqueurs.map += salle;
+		} 
+		if(grille2[j][i] === 14)
+		{
+		marqueurs.map += pion1;
 		}
+		else if(grille2[j][i] === 15)
+		{
+		marqueurs.map += pion2;
+		}
+		else if(grille2[j][i] === 16)
+		{
+		marqueurs.map += pion3;
+		}
+		
 	}
-	marqueurs.map += "<br/>";
+	marqueurs.map += "</tr>";
 	}
-
+	marqueurs.map += "</table>";
 	page = page.supplant(marqueurs);
 
 	res.writeHead(200, {'Content-Type': 'text/html'});

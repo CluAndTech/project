@@ -2,3 +2,11 @@ html
 {
 Line-Height: 0;
 }
+tr
+{
+border:0px;
+}
+table
+{
+border-collapse:collapse;
+}
