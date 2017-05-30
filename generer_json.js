@@ -137,16 +137,28 @@ var vivant = function(hote,joueurs){
 	return joueur_vivant;
 };
 
-var actif = function(hote, joueurs){
+var position = function (pos) {
+	pos = [];
 	
+	pos[0] = {};
+	pos[0].cd = {"c" : 8, "l" : 1};
 
-};
+	pos[1] = {};
+	pos[1].cd = {"c" : 1, "l" : 17};
+
+	pos[2] = {};
+	pos[2].cd = {"c" : 17, "l" : 23};
+
+	return (pos);
+}
 
 var generer_json = function(hote, joueurs){
 	var scenario = generer_scenario(cartes_copie);
 	var game = distribuer_carte(cartes_copie);
 	game.scenario = scenario;
 	game.vivant = vivant(hote, joueurs);
+	game.actif = 0;
+	game.position = position(game.position);
 	game = JSON.stringify(game);
 	fs.writeFileSync(hote+".json", game, "UTF-8");
 
