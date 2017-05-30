@@ -9,7 +9,7 @@ var cd;                    // case depart
 var n;
 
 //==========================================================================
-var deplacer = function(n, grille){
+var deplacer = function(n, grille, l, c){
 
 var calcul_ca = function(grille, cd, n) {
 	var grille_ca;
@@ -76,7 +76,7 @@ var calcul_ca = function(grille, cd, n) {
 
 	return grille_ca;
 	
-}
+};
 
 //==========================================================================
 
@@ -104,7 +104,7 @@ var display_grille = function(grille, cd) {
 
 //==========================================================================
 
-grille = [
+/*grille = [
 
 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 [0,3,3,3,3,3,0,1,1,0,3,3,3,3,3,3,3,0,1,0,3,3,3,0],
@@ -133,13 +133,15 @@ grille = [
 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 		
 ];
+*/
 
-process.stdout.write("? ");
+//process.stdout.write("? ");
 
-cd = {"l": 7, "c": 11};
+cd = {"l": l, "c": c};
 grille_ca = calcul_ca(grille, cd, n);
+return grille_ca;
 
-display_grille(grille_ca, cd);
+//display_grille(grille_ca, cd);
 }
 
 module.exports = deplacer;

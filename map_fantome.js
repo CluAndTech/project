@@ -2,6 +2,7 @@
 
 var fs = require("fs");
 require('remedial');
+var deplacer = require("./req_deplacer.js");
 
 var grille = [
 
@@ -74,6 +75,11 @@ var map = function (req, res, query) {
 	var pion1 = "<img src=\"pion1.png\"/>";
 	var pion2 = "<img src=\"pion2.png\"/>";
 	var pion3 = "<img src=\"pion3.png\"/>";
+
+	var grille3 = deplacer(5, grille, 1, 7);
+    console.log(grille3);
+
+
 	// AFFICHAGE DE LA PAGE D'ACCUEIL
 
 	page = fs.readFileSync('map_fantome.html', 'utf-8');
@@ -115,7 +121,11 @@ var map = function (req, res, query) {
 		{
 		marqueurs.map += pion3;
 		}
-		
+		if(grille3[j][i] === 2)
+		{
+		marqueurs.map += "<a href=\"/deplacer?x="+i+"&y="+j+"\">"+"<img src=\"pion3.png\"</a>";
+		}
+
 	}
 	marqueurs.map += "</tr>";
 	}
