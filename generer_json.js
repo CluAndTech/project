@@ -54,11 +54,11 @@ var melanger_cartes = function(cartes)
 	var r1,r2,tempo;
 	for(idx = 0; idx < 20; idx++);
 	{
-		 r1 = Math.floor(Math.random() * cartes.length);
-		 r2 = Math.floor(Math.random() * cartes.length);
-		 tempo = cartes[r1];
-		 cartes[r1] = cartes[r2];
-		 cartes[r2] = tempo;
+		r1 = Math.floor(Math.random() * cartes.length);
+		r2 = Math.floor(Math.random() * cartes.length);
+		tempo = cartes[r1];
+		cartes[r1] = cartes[r2];
+		cartes[r2] = tempo;
 	}
 	return cartes;
 };
@@ -72,7 +72,7 @@ var distribuer_carte = function(cartes)
 	var perso = 0;
 	var persoMax;
 	var idx;
-	
+
 	var game;
 	game = {};
 	game.cartes = [];
@@ -86,7 +86,7 @@ var distribuer_carte = function(cartes)
 	for (idx = 0; idx < 3; idx++)
 	{
 		game.cartes[idx] = [];
-		
+
 		if (idx === 0)
 		{
 			lieuMax = 2;
@@ -105,7 +105,7 @@ var distribuer_carte = function(cartes)
 			armeMax = 5;
 			persoMax = 5;
 		}
-	
+
 		while (lieu < lieuMax)
 		{
 			game.cartes[idx].push(cartes.lieux[lieu]);
@@ -117,7 +117,7 @@ var distribuer_carte = function(cartes)
 			game.cartes[idx].push(cartes.armes[arme]);
 			arme++;
 		}
-	
+
 		while (perso < persoMax)
 		{
 			game.cartes[idx].push(cartes.personnages[perso]);
@@ -127,10 +127,26 @@ var distribuer_carte = function(cartes)
 	return (game);
 };
 
+var vivant = function(hote,joueurs){
+	var joueur_vivant = [];
+	var i;
+	for(i=0; i<joueurs.length; i++)
+	{
+		joueur_vivant[i] = joueurs[i];
+	}
+	return joueur_vivant;
+};
+
+var actif = function(hote, joueurs){
+	
+
+};
+
 var generer_json = function(hote, joueurs){
 	var scenario = generer_scenario(cartes_copie);
 	var game = distribuer_carte(cartes_copie);
 	game.scenario = scenario;
+	game.vivant = vivant(hote, joueurs);
 	game = JSON.stringify(game);
 	fs.writeFileSync(hote+".json", game, "UTF-8");
 
