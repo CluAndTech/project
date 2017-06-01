@@ -140,14 +140,9 @@ var vivant = function(hote,joueurs){
 var position = function (pos) {
 	pos = [];
 	
-	pos[0] = {};
-	pos[0].cd = {"c" : 8, "l" : 1};
-
-	pos[1] = {};
-	pos[1].cd = {"c" : 1, "l" : 17};
-
-	pos[2] = {};
-	pos[2].cd = {"c" : 17, "l" : 23};
+	pos[0] = [8, 1];
+	pos[1] = [1,17];
+	pos[2] = [17, 23];
 
 	return (pos);
 }
