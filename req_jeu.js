@@ -9,8 +9,8 @@
 "use strict";
 
 var fs = require("fs");
-var deplacer = require("./req_deplacer.js");
 require('remedial');
+var map = require("./map_deplacement.js");
 
 var jeu = function(req,res,query){
 
@@ -39,25 +39,24 @@ var jeu = function(req,res,query){
 
 	}
 
-	if(query.action === "lancerD"){
+	if (query.action === "deplacer"){
+		var game;
+		var x;
+		var y;
 
 		marqueurs.FirstD = Number(Math.floor(Math.random()*6)+1);
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
 		marqueurs.total = marqueurs.FirstD + marqueurs.SecondD;
-		page = fs.readFileSync("plateau_deplacement.html","utf-8");
-	}
-
-	if (query.action === "deplacer"){
-		var game;
-
+	
 		game = fs.readFileSync(query.hote + ".json", "UTF-8");
 		game = JSON.parse(game);
-		
-		game.position[game.actif][0] = query.x;
-		game.position[game.actif][1] = query.y;
 
-		game = JSON.stringify(game);
-		fs.writeFileSync(query.hote + ".json", game, "UTF-8");
+		y = game.position[game.actif][0];
+		x = game.position[game.actif][1];
+		console.log(x);
+		console.log(y);
+		marqueurs.map = map(marqueurs.total,x,y);
+		page = fs.readFileSync("map_fantome.html","utf-8");
 	}
 
 	page = page.supplant(marqueurs);
