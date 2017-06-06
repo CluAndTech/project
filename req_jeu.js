@@ -55,9 +55,25 @@ var jeu = function(req,res,query){
 		x = game.position[game.actif][1];
 		console.log(x);
 		console.log(y);
-		marqueurs.map = map(marqueurs.total,x,y);
+		marqueurs.map = map(marqueurs.total,x,y,query);
 		page = fs.readFileSync("map_fantome.html","utf-8");
-	}	
+	}
+	if (query.action === "deplacement"){
+		var compte = query.compte;
+		var hote = query.hote;
+		var x = query.x;
+		var y = query.y;
+		var game = fs.readFileSync(hote+".json","UTF-8");
+		game = JSON.parse(game);
+		game.position[game.actif][0] = y;
+		game.position[game.actif][1] = x;
+		game = JSON.stringify(game);
+		fs.writeFileSync(hote+".json", game, "UTF-8");
+		marqueurs.map = map(0,0,0,query);
+		page = fs.readFileSync("map_fantome.html","UTF-8");
+
+	};
+
 
 	page = page.supplant(marqueurs);
 	res.write(page);
