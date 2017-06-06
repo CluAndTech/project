@@ -57,7 +57,7 @@ var jeu = function(req,res,query){
 		console.log(y);
 		marqueurs.map = map(marqueurs.total,x,y);
 		page = fs.readFileSync("map_fantome.html","utf-8");
-	}
+	}	
 
 	page = page.supplant(marqueurs);
 	res.write(page);
