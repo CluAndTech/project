@@ -1,9 +1,4 @@
-"use strict";
-
 var fs = require("fs");
-require('remedial');
-var deplacer = require("./req_deplacer.js");
-
 var grille = [
 
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -64,29 +59,34 @@ var grille = [
 
 		];
 
-		var map = function (n,l,c,query) {
+
+
+		var map = function (query) {
 
 			var game = fs.readFileSync(query.hote+".json","UTF-8");
 			game = JSON.parse(game);
-			grille2[game.position[0][1]][game.position[0][0]] = 14;
+			console.log(game.position[0][1]);
+			console.log(game.position[0][0]);
+			grille2[game.position[0][0]][game.position[0][1]] = 14;
 			grille2[game.position[1][1]][game.position[1][0]] = 15;
 			grille2[game.position[2][1]][game.position[2][0]] = 16;
 			console.log("GRILLE 2:");
-			console.log(grille2+"\n");
+			for(i=0;i<grille2.length;i++)
+			{
+				console.log(grille2[i]);
+			}
 
 			var marqueurs;
 			var page;
 
 			var mur = "<td style='background-image: url(mur.png)'>"
-			var couloir = "<td style='background-image: url(couloir.png)'>";
+				var couloir = "<td style='background-image: url(couloir.png)'>";
 			var salle = "<td style='background-image: url(salle.png)'>"
-			var vide = '<img src="vide.png"/>';
+				var vide = '<img src="vide.png"/>';
 			var pion1 = "<img src=\"pion1.png\"/>";
 			var pion2 = "<img src=\"pion2.png\"/>";
 			var pion3 = "<img src=\"pion3.png\"/>";
 
-			var grille3 = deplacer(n, grille, l, c);
-			console.log(grille3);
 
 
 			// AFFICHAGE DE LA PAGE D'ACCUEIL
@@ -120,10 +120,6 @@ var grille = [
 						{
 							marqueurs.map += pion3;
 						}
-						else if(grille3[j][i] === 2)
-						{
-							marqueurs.map += "<a href=\"/jeu?action=deplacement&x="+i+"&y="+j+"&compte="+query.compte+"&hote="+query.hote+"\">"+"<img src=\"pion3.png\"</a>";
-						}
 						else
 						{
 							marqueurs.map += vide;
@@ -131,16 +127,11 @@ var grille = [
 					}
 					else if(grille[j][i] === 3)
 					{
-						marqueurs.map += salle;
+						marqueurs.map += salle
 					}
 					else if(grille[j][i] > 3&&grille[j][i]<14)
 					{
-						marqueurs.map += salle;
-						if(grille3[j][i] === 2)
-						{
-							marqueurs.map += "<a href=\"/jeu?action=deplacement&x="+i+"&y="+j+"&compte="+query.compte+"&hote="+query.hote+"\">"+"<img src=\"pion3.png\"</a>";
-						}
-
+						marqueurs.map += salle
 					} 
 
 				}

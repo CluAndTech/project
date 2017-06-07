@@ -11,6 +11,7 @@
 var fs = require("fs");
 require('remedial');
 var map = require("./map_deplacement.js");
+var map_afficher = require("./map_afficher.js");
 
 var jeu = function(req,res,query){
 
@@ -69,7 +70,7 @@ var jeu = function(req,res,query){
 		game.position[game.actif][1] = x;
 		game = JSON.stringify(game);
 		fs.writeFileSync(hote+".json", game, "UTF-8");
-		marqueurs.map = map(0,0,0,query);
+		marqueurs.map = map_afficher(query);
 		page = fs.readFileSync("map_fantome.html","UTF-8");
 
 	};
