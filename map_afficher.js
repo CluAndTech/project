@@ -80,9 +80,9 @@ var grille = [
 			var page;
 
 			var mur = "<td style='background-image: url(mur.png)'>"
-				var couloir = "<td style='background-image: url(couloir.png)'>";
+			var couloir = "<td style='background-image: url(couloir.png)'>";
 			var salle = "<td style='background-image: url(salle.png)'>"
-				var vide = '<img src="vide.png"/>';
+			var vide = '<img src="vide.png"/>';
 			var pion1 = "<img src=\"pion1.png\"/>";
 			var pion2 = "<img src=\"pion2.png\"/>";
 			var pion3 = "<img src=\"pion3.png\"/>";
@@ -128,10 +128,28 @@ var grille = [
 					else if(grille[j][i] === 3)
 					{
 						marqueurs.map += salle
+					
 					}
 					else if(grille[j][i] > 3&&grille[j][i]<14)
 					{
 						marqueurs.map += salle
+						
+						if(grille2[j][i] === 14)
+						{
+							marqueurs.map += pion1;
+						}
+						else if(grille2[j][i] === 15)
+						{
+							marqueurs.map += pion2;
+						}
+						else if(grille2[j][i] === 16)
+						{
+							marqueurs.map += pion3;
+						}
+						else
+						{
+							marqueurs.map += vide;
+						}
 					} 
 
 				}

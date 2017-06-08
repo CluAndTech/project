@@ -12,7 +12,7 @@ var fs = require("fs");
 require('remedial');
 var map = require("./map_deplacement.js");
 var map_afficher = require("./map_afficher.js");
-
+var verif_salle = require("./verif_salle.js");
 var jeu = function(req,res,query){
 
 
@@ -21,7 +21,6 @@ var jeu = function(req,res,query){
 	var idx;
 	var FirstD;
 	var SecondD;
-
 	marqueurs.FirstD = "";
 	marqueurs.SecondD = "";
 	marqueurs.total = "";
@@ -44,11 +43,13 @@ var jeu = function(req,res,query){
 		var game;
 		var x;
 		var y;
+		var z;
 
 		marqueurs.FirstD = Number(Math.floor(Math.random()*6)+1);
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
-		marqueurs.total = marqueurs.FirstD + marqueurs.SecondD;
-	
+		z = marqueurs.FirstD + marqueurs.SecondD;
+		marqueurs.total ="Vous pouvez vous deplacez de " + z;
+
 		game = fs.readFileSync(query.hote + ".json", "UTF-8");
 		game = JSON.parse(game);
 
@@ -56,7 +57,7 @@ var jeu = function(req,res,query){
 		x = game.position[game.actif][1];
 		console.log(x);
 		console.log(y);
-		marqueurs.map = map(marqueurs.total,x,y,query);
+		marqueurs.map = map(z,x,y,query);
 		page = fs.readFileSync("map_fantome.html","utf-8");
 	}
 	if (query.action === "deplacement"){
@@ -65,14 +66,23 @@ var jeu = function(req,res,query){
 		var x = query.x;
 		var y = query.y;
 		var game = fs.readFileSync(hote+".json","UTF-8");
+		var position;
+
 		game = JSON.parse(game);
 		game.position[game.actif][0] = y;
 		game.position[game.actif][1] = x;
 		game = JSON.stringify(game);
 		fs.writeFileSync(hote+".json", game, "UTF-8");
+		position = verif_salle(y,x);
 		marqueurs.map = map_afficher(query);
-		page = fs.readFileSync("map_fantome.html","UTF-8");
-
+		console.log(position);
+		if(position === "salle"){
+			page = fs.readFileSync("map_soupcon.html","UTF-8");
+		} else if(position === "salle_accusation"){
+			page = fs.readFileSync("map_accusation.html","UTF-8");
+		} else if(position === "couloir"){
+			page = fs.readFileSync("map_fantome.html","UTF-8");
+		}	
 	};
 
 
