@@ -11,8 +11,8 @@ var afficher_carte = function(query)
 	var cartes = game.cartes[game.actif];
 	var i, marqueurs={};
 	marqueurs.cartes = "";
-       	for(i=0; i < cartes.length; i++){
-		marqueurs.cartes += cartes[i]+" ";
+    for(i=0; i < cartes.length; i++){
+		marqueurs.cartes += "<img src='./cartes/" + cartes[i] + ".jpg'>";
 	}	
 	console.log(marqueurs.cartes);
 	return marqueurs.cartes;
