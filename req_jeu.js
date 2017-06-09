@@ -13,6 +13,7 @@ require('remedial');
 var map = require("./map_deplacement.js");
 var map_afficher = require("./map_afficher.js");
 var verif_salle = require("./verif_salle.js");
+var afficher_carte = require("./afficher_carte.js");
 var jeu = function(req,res,query){
 
 
@@ -26,6 +27,7 @@ var jeu = function(req,res,query){
 	marqueurs.total = "";
 	marqueurs.compte = query.compte;
 	marqueurs.hote = query.hote;
+	marqueurs.cartes = afficher_carte(query);
 
 	if(query.action === "actif"){
 
