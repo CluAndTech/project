@@ -140,7 +140,7 @@ var vivant = function(hote,joueurs){
 var position = function (pos) {
 	pos = [];
 	
-	pos[0] = [7, 1];
+	pos[0] = [17, 14];
 	pos[1] = [1,17];
 	pos[2] = [17, 23];
 

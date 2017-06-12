@@ -85,8 +85,34 @@ var jeu = function(req,res,query){
 		} else if(position === "couloir"){
 			page = fs.readFileSync("map_fantome.html","UTF-8");
 		}	
-	};
+	} 
+	if(query.action === "accuser"){
+		
+	var game = fs.readFileSync(query.hote+".json",game,"UTF-8");
+	var c;
+	var w;
+	var p;
 
+	game = JSON.parse(game);
+	c = game.scenario[0];
+	p = game.scenario[1];
+	w = game.scenario[2];
+	marqueurs.c = c;
+	marqueurs.p = p;
+	marqueurs.w = w;
+	console.log(marqueurs.c + "d");
+	console.log(marqueurs.p + "d");
+	console.log(marqueurs.w + "d");
+	console.log(query.characters + "c");
+	console.log(query.place + "c");
+	console.log(query.weapon + "c");
+	if(query.characters === c && query.weapon === w && query.place === p){
+		page = fs.readFileSync("Victoire.html","UTF-8");
+	} else {
+		page = fs.readFileSync("Defaite.html","UTF-8");
+ 	}
+	
+}
 
 	page = page.supplant(marqueurs);
 	res.write(page);
@@ -95,7 +121,5 @@ var jeu = function(req,res,query){
 };
 
 module.exports = jeu;
-
-
 
 
