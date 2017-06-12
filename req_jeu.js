@@ -1,7 +1,7 @@
 /*
  **File name : req_jeu.js
  ** Creation Date : 22-05-2017
- ** Last Modified : Thu 01 Jun 2017 10:00:09 CEST
+ ** Last Modified : Mon 12 Jun 2017 14:24:12 CEST
  ** Created by : Melvin DELPIERRE
  ** NOTE :
  */
@@ -14,8 +14,10 @@ var map = require("./map_deplacement.js");
 var map_afficher = require("./map_afficher.js");
 var verif_salle = require("./verif_salle.js");
 var afficher_carte = require("./afficher_carte.js");
-var jeu = function(req,res,query){
+var next_turn = require("./next_turn.js");
 
+
+var jeu = function(req,res,query){
 
 	var marqueurs = {};
 	var page;
@@ -29,16 +31,12 @@ var jeu = function(req,res,query){
 	marqueurs.hote = query.hote;
 	marqueurs.cartes = afficher_carte(query);
 
-	if(query.action === "actif"){
+	var game = JSON.parse(fs.readFileSync(query.hote + ".json", "UTF-8"));
 
+	if (query.compte === game.vivant[game.actif]){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
-
-	}
-
-	if(query.action === "passif"){
-
+	}else {
 		page = fs.readFileSync("plateau_passif.html", "utf-8");
-
 	}
 
 	if (query.action === "deplacer"){
@@ -84,6 +82,7 @@ var jeu = function(req,res,query){
 			page = fs.readFileSync("map_accusation.html","UTF-8");
 		} else if(position === "couloir"){
 			page = fs.readFileSync("map_fantome.html","UTF-8");
+			next_turn(hote);
 		}	
 	};
 
