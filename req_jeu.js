@@ -1,7 +1,7 @@
 /*
  **File name : req_jeu.js
  ** Creation Date : 22-05-2017
- ** Last Modified : Mon 12 Jun 2017 14:24:12 CEST
+ ** Last Modified : Wed 14 Jun 2017 14:19:20 CEST
  ** Created by : Melvin DELPIERRE
  ** NOTE :
  */
@@ -15,6 +15,7 @@ var map_afficher = require("./map_afficher.js");
 var verif_salle = require("./verif_salle.js");
 var afficher_carte = require("./afficher_carte.js");
 var next_turn = require("./next_turn.js");
+var map_wait = require("./map_wait.js");
 
 
 var jeu = function(req,res,query){
@@ -29,7 +30,7 @@ var jeu = function(req,res,query){
 	marqueurs.total = "";
 	marqueurs.compte = query.compte;
 	marqueurs.hote = query.hote;
-	marqueurs.cartes = afficher_carte(query);
+	marqueurs.cartes = afficher_carte(query.hote);
 
 	var game = JSON.parse(fs.readFileSync(query.hote + ".json", "UTF-8"));
 
@@ -37,6 +38,10 @@ var jeu = function(req,res,query){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
 	}else {
 		page = fs.readFileSync("plateau_passif.html", "utf-8");
+
+		marqueurs = map_wait(query.hote, marqueurs);
+		marqueurs.cards = afficher_carte(query.hote, query.compte);
+		console.log("z");
 	}
 
 	if (query.action === "deplacer"){
@@ -60,13 +65,15 @@ var jeu = function(req,res,query){
 		marqueurs.map = map(z,x,y,query);
 		page = fs.readFileSync("map_fantome.html","utf-8");
 	}
-	if (query.action === "deplacement"){
+	else if (query.action === "deplacement"){
 		var compte = query.compte;
 		var hote = query.hote;
 		var x = query.x;
 		var y = query.y;
 		var game = fs.readFileSync(hote+".json","UTF-8");
 		var position;
+		
+		console.log("marqueurs = " + marqueurs);
 
 		game = JSON.parse(game);
 		game.position[game.actif][0] = y;
@@ -85,33 +92,34 @@ var jeu = function(req,res,query){
 			next_turn(hote);
 		}	
 	} 
-	if(query.action === "accuser"){
-		
-	var game = fs.readFileSync(query.hote+".json",game,"UTF-8");
-	var c;
-	var w;
-	var p;
+	else if(query.action === "accuser"){
 
-	game = JSON.parse(game);
-	c = game.scenario[0];
-	p = game.scenario[1];
-	w = game.scenario[2];
-	marqueurs.c = c;
-	marqueurs.p = p;
-	marqueurs.w = w;
-	console.log(marqueurs.c + "d");
-	console.log(marqueurs.p + "d");
-	console.log(marqueurs.w + "d");
-	console.log(query.characters + "c");
-	console.log(query.place + "c");
-	console.log(query.weapon + "c");
-	if(query.characters === c && query.weapon === w && query.place === p){
-		page = fs.readFileSync("Victoire.html","UTF-8");
-	} else {
-		page = fs.readFileSync("Defaite.html","UTF-8");
- 	}
-	
-}
+		var game = fs.readFileSync(query.hote+".json",game,"UTF-8");
+		var c;
+		var w;
+		var p;
+
+		game = JSON.parse(game);
+		c = game.scenario[0];
+		p = game.scenario[1];
+		w = game.scenario[2];
+		marqueurs.c = c;
+		marqueurs.p = p;
+		marqueurs.w = w;
+		console.log(marqueurs.c + "d");
+		console.log(marqueurs.p + "d");
+		console.log(marqueurs.w + "d");
+		console.log(query.characters + "c");
+		console.log(query.place + "c");
+		console.log(query.weapon + "c");
+		if(query.characters === c && query.weapon === w && query.place === p){
+			page = fs.readFileSync("Victoire.html","UTF-8");
+		} else {
+			page = fs.readFileSync("Defaite.html","UTF-8");
+		}
+
+	}
+
 
 	page = page.supplant(marqueurs);
 	res.write(page);

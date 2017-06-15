@@ -72,8 +72,24 @@ var grille = [
 			position1 = game.position[0];
 			position2 = game.position[1];
 			position3 = game.position[2];
-			console.log(position1);
-
+			for(j=0;j<25;j++)
+			{
+				for(i=0; i<24; i++)
+				{
+					if(grille[j][i] === position1)
+					{
+						grille[j][i] = 14;
+					}
+					if(grille[j][i] === position2)
+					{
+						grille[j][i] = 15;
+					}
+					if(grille[j][i] === position3)
+					{
+						grille[j][i] = 16;
+					}
+				}
+			}
 			var marqueurs;
 			var page;
 
