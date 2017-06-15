@@ -1,3 +1,8 @@
+/*
+**	generer_json.js
+*/
+
+
 "use strict";
 var fs = require("fs");
 var cartes = {};
@@ -14,7 +19,7 @@ cartes.lieux[0] = "open_space";
 cartes.lieux[1] = "administration";
 cartes.lieux[2] = "salle_cours";
 cartes.lieux[3] = "buvette";
-cartes.lieux[4] = "salle_informatique";
+cartes.lieux[4] = "salle_info";
 cartes.lieux[5] = "salle_serveur";
 cartes.lieux[6] = "exterieur";
 cartes.lieux[7] = "toilettes";
@@ -140,7 +145,7 @@ var vivant = function(hote,joueurs){
 var position = function (pos) {
 	pos = [];
 	
-	pos[0] = [17, 14];
+	pos[0] = [7, 1];
 	pos[1] = [1,17];
 	pos[2] = [17, 23];
 

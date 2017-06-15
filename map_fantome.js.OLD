@@ -1,5 +1,5 @@
 /*
-** map_deplacement.js
+** map_fantome.js
 */
 
 
@@ -42,7 +42,7 @@ var grille = [
 	var grille2 = [
 
 		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
+		[0,3,3,3,3,3,0,1/*pion1*/,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
 		[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
 		[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
 		[0,3,3,3,3,3,0,1,1,1,13,3,3,3,3,3,3,13,1,0,0,3,3,0],
@@ -56,45 +56,47 @@ var grille = [
 		[0,3,3,3,3,3,3,3,5,1,1,0,3,3,3,0,1,1,1,1,1,1,1,0],
 		[0,3,3,3,3,3,3,3,0,1,1,0,3,3,3,0,1,1,0,0,0,0,0,0],
 		[0,0,0,0,0,0,0,5,0,1,1,0,3,3,3,0,1,1,0,3,3,3,3,0],
-		[0,1,1,1,1,1,1,1,1,1,1,0,3,3,3,0,1,0,0,3,3,3,3,0],
+		[0,1/*pion2*/,1,1,1,1,1,1,1,1,1,0,3,3,3,0,1,0,0,3,3,3,3,0],
 		[0,1,1,1,1,1,1,1,1,1,1,0,0,9,0,0,1,10,3,3,3,3,3,0],
 		[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,3,3,3,3,0],
 		[0,0,0,6,0,0,0,0,1,1,0,0,0,7,0,0,1,1,0,0,0,0,0,0],
 		[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,1,1,1,1,1,0],
 		[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,1,1,1,1,1,0],
 		[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,8,0,0,0,0],
-		[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,3,3,3,3,0],
+		[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1/*pion3*/,0,3,3,3,3,0],
 		[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,3,3,3,3,0],
 		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 
 		];
 
-		var map = function (n,l,c,query) {
+		var map = function (req, res, query) {
 
-			var game = fs.readFileSync(query.hote+".json","UTF-8");
+			var position1=[], position2=[], position3=[];
+			var game = fs.readFileSync(/*query.hote+*/"dede.json", "UTF-8");
 			game = JSON.parse(game);
-			grille2[game.position[0][1]][game.position[0][0]] = 14;
-			grille2[game.position[1][1]][game.position[1][0]] = 15;
-			grille2[game.position[2][1]][game.position[2][0]] = 16;
-			console.log("GRILLE 2:");
-			console.log(grille2+"\n");
+			position1 = game.position[0];
+			position2 = game.position[1];
+			position3 = game.position[2];
+			console.log(position1);
 
 			var marqueurs;
 			var page;
 
-			var mur = "<td style='background-image: url(mur.png)'>"
+			var mur = "<td style='background-image: url(mur.png)'>";
 			var couloir = "<td style='background-image: url(couloir.png)'>";
-			var salle = "<td style='background-image: url(salle.png)'>"
+			var salle = "<td style='background-image: url(salle.png)'>";
 			var vide = '<img src="vide.png"/>';
 			var pion1 = "<img src=\"pion1.png\"/>";
 			var pion2 = "<img src=\"pion2.png\"/>";
 			var pion3 = "<img src=\"pion3.png\"/>";
 
-			var grille3 = deplacer(n, grille, l, c);
+			var grille3 = deplacer(6, grille, 1, 7);
 			console.log(grille3);
 
 
 			// AFFICHAGE DE LA PAGE D'ACCUEIL
+
+			page = fs.readFileSync('map_fantome.html', 'utf-8');
 
 			marqueurs = {};
 			var i,j;
@@ -125,9 +127,9 @@ var grille = [
 						{
 							marqueurs.map += pion3;
 						}
-						if(grille3[j][i] === 2)
+						else if(grille3[j][i] === 2)
 						{
-							marqueurs.map += "<a href=\"/jeu?action=deplacement&x="+i+"&y="+j+"&compte="+query.compte+"&hote="+query.hote+"\">"+"<img src=\"pion3.png\"</a>";
+							marqueurs.map += "<a href=\"/jeu?action=deplacer&x="+i+"&y="+j+"\">"+"<img src=\"pion3.png\"</a>";
 						}
 						else
 						{
@@ -143,7 +145,7 @@ var grille = [
 						marqueurs.map += salle;
 						if(grille3[j][i] === 2)
 						{
-							marqueurs.map += "<a href=\"/jeu?action=deplacement&x="+i+"&y="+j+"&compte="+query.compte+"&hote="+query.hote+"\">"+"<img src=\"pion3.png\"</a>";
+							marqueurs.map += "<a href=\"/jeu?action=deplacer&x="+i+"&y="+j+"\">"+"<img src=\"pion3.png\"</a>";
 						}
 
 					} 
@@ -152,8 +154,12 @@ var grille = [
 				marqueurs.map += "</tr>";
 			}
 			marqueurs.map += "</table>";
-			return marqueurs.map;
+			page = page.supplant(marqueurs);
+
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.write(page);
+			res.end();
 		};
 //--------------------------------------------------------------------------
 
-module.exports = map
+module.exports = map;

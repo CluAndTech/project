@@ -1,3 +1,8 @@
+/*
+** map_afficher.js
+*/
+
+
 var fs = require("fs");
 var grille = [
 
