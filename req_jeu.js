@@ -39,7 +39,7 @@ var jeu = function(req,res,query){
 	}else {
 		page = fs.readFileSync("plateau_passif.html", "utf-8");
 
-		marqueurs = map_wait(query.hote, marqueurs);
+		marqueurs.map = map_afficher(query.hote);
 		marqueurs.cards = afficher_carte(query.hote, query.compte);
 		console.log("z");
 	}
@@ -76,12 +76,12 @@ var jeu = function(req,res,query){
 		console.log("marqueurs = " + marqueurs);
 
 		game = JSON.parse(game);
-		game.position[game.actif][0] = y;
-		game.position[game.actif][1] = x;
+		game.position[game.actif][0] = Number(x);
+		game.position[game.actif][1] = Number(y);
 		game = JSON.stringify(game);
 		fs.writeFileSync(hote+".json", game, "UTF-8");
 		position = verif_salle(y,x);
-		marqueurs.map = map_afficher(query);
+		marqueurs.map = map_afficher(query.hote);
 		console.log(position);
 		if(position === "salle"){
 			page = fs.readFileSync("map_soupcon.html","UTF-8");
