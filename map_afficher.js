@@ -1,40 +1,11 @@
 /*
-** map_afficher.js
-*/
-
-
+ * Version 2 de la fonction map_afficher 
+ */
+"use strict";
 var fs = require("fs");
-var grille = [
-
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
-	[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
-	[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
-	[0,3,3,3,3,3,0,1,1,1,13,3,3,3,3,3,3,13,1,0,0,3,3,0],
-	[0,0,0,0,4,0,0,1,1,1,0,3,3,3,3,3,3,0,1,1,0,0,12,0],
-	[0,1,1,1,1,1,1,1,1,1,0,0,13,0,0,13,0,0,1,1,1,1,1,0],
-	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-	[0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
-	[0,3,3,3,3,0,0,0,0,1,1,0,0,0,0,0,1,1,0,3,3,3,3,0],
-	[0,3,3,3,3,3,3,3,0,1,1,0,3,3,3,0,1,1,0,3,3,3,3,0],
-	[0,3,3,3,3,3,3,3,0,1,1,0,3,3,3,0,1,1,0,0,0,0,11,0],
-	[0,3,3,3,3,3,3,3,5,1,1,0,3,3,3,0,1,1,1,1,1,1,1,0],
-	[0,3,3,3,3,3,3,3,0,1,1,0,3,3,3,0,1,1,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,5,0,1,1,0,3,3,3,0,1,1,0,3,3,3,3,0],
-	[0,1,1,1,1,1,1,1,1,1,1,0,3,3,3,0,1,0,0,3,3,3,3,0],
-	[0,1,1,1,1,1,1,1,1,1,1,0,0,9,0,0,1,10,3,3,3,3,3,0],
-	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,3,3,3,3,0],
-	[0,0,0,6,0,0,0,0,1,1,0,0,0,7,0,0,1,1,0,0,0,0,0,0],
-	[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,1,1,1,1,1,0],
-	[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,1,1,1,1,1,0],
-	[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,8,0,0,0,0],
-	[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,3,3,3,3,0],
-	[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,3,3,3,3,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-
-	];
-
-	var grille2 = [
+var map_afficher = function(host)
+{
+	var grille = [
 
 		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 		[0,3,3,3,3,3,0,1,1,1,0,3,3,3,3,3,3,0,1,0,3,3,3,0],
@@ -62,107 +33,73 @@ var grille = [
 		[0,3,3,3,3,3,3,0,1,1,0,3,3,3,3,0,1,1,0,3,3,3,3,0],
 		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 
-		];
+	];
+
+	var vide = '<img src="vide.png"/>';
+	var pion1 = "<img src=\"pion1.png\"/>";
+	var pion2 = "<img src=\"pion2.png\"/>";
+	var pion3 = "<img src=\"pion3.png\"/>";
+
+	var mur = "<td style='background-image: url(mur.png)'>"
+	var couloir = "<td style='background-image: url(couloir.png)'>";
+	var salle = "<td style='background-image: url(salle.png)'>"
 
 
+	var marqueurs = {};
+	var x,y;
 
-		var map = function (query) {
+	var game = fs.readFileSync(host+".json", "UTF-8");
+	game = JSON.parse(game);
+	marqueurs.map = "<table>";
+	for(y=0; y<25; y++)
+	{
 
-			var game = fs.readFileSync(query.hote+".json","UTF-8");
-			game = JSON.parse(game);
-			console.log(game.position[0][1]);
-			console.log(game.position[0][0]);
-			grille2[game.position[0][0]][game.position[0][1]] = 14;
-			grille2[game.position[1][1]][game.position[1][0]] = 15;
-			grille2[game.position[2][1]][game.position[2][0]] = 16;
-			console.log("GRILLE 2:");
-			for(i=0;i<grille2.length;i++)
+		marqueurs.map += "<tr>";
+		for(x=0; x<24; x++)
+		{
+
+			// generation du backround
+
+			if(grille[y][x] === 0)
 			{
-				console.log(grille2[i]);
+				marqueurs.map += mur;
+			}
+			else if(grille[y][x] === 1)
+			{
+				marqueurs.map += couloir;
+			}
+			else if(grille[y][x] >= 3)
+			{
+				marqueurs.map += salle;
 			}
 
-			var marqueurs;
-			var page;
+			// generation des pions ou du vide
 
-			var mur = "<td style='background-image: url(mur.png)'>"
-			var couloir = "<td style='background-image: url(couloir.png)'>";
-			var salle = "<td style='background-image: url(salle.png)'>"
-			var vide = '<img src="vide.png"/>';
-			var pion1 = "<img src=\"pion1.png\"/>";
-			var pion2 = "<img src=\"pion2.png\"/>";
-			var pion3 = "<img src=\"pion3.png\"/>";
-
-
-
-			// AFFICHAGE DE LA PAGE D'ACCUEIL
-
-			marqueurs = {};
-			var i,j;
-			marqueurs.map = "<table>";
-
-			for(j=0; j<25; j++)
+			//console.log("x :"+game.position[0][0]);
+			//console.log("y :"+game.position[0][1]);
+			if(game.position[0][0] === x && game.position[0][1] === y)
 			{
-				marqueurs.map += "<tr>";
-				for(i=0; i<24; i++)
-				{
-					if(grille[j][i] === 0)
-					{
-						marqueurs.map += mur + vide;
-					}
-					else if(grille[j][i] === 1)
-					{
-						marqueurs.map += couloir;
-
-						if(grille2[j][i] === 14)
-						{
-							marqueurs.map += pion1;
-						}
-						else if(grille2[j][i] === 15)
-						{
-							marqueurs.map += pion2;
-						}
-						else if(grille2[j][i] === 16)
-						{
-							marqueurs.map += pion3;
-						}
-						else
-						{
-							marqueurs.map += vide;
-						}
-					}
-					else if(grille[j][i] === 3)
-					{
-						marqueurs.map += salle
-					
-					}
-					else if(grille[j][i] > 3&&grille[j][i]<14)
-					{
-						marqueurs.map += salle
-						
-						if(grille2[j][i] === 14)
-						{
-							marqueurs.map += pion1;
-						}
-						else if(grille2[j][i] === 15)
-						{
-							marqueurs.map += pion2;
-						}
-						else if(grille2[j][i] === 16)
-						{
-							marqueurs.map += pion3;
-						}
-						else
-						{
-							marqueurs.map += vide;
-						}
-					} 
-
-				}
-				marqueurs.map += "</tr>";
+				marqueurs.map += pion1;
 			}
-			marqueurs.map += "</table>";
-			return marqueurs.map;
-		};
-//--------------------------------------------------------------------------
+			else if(game.position[1][0] === x && game.position[1][1] === y)
+			{
+				marqueurs.map += pion2;
+			}
+			else if(game.position[2][0] === x && game.position[2][1] === y)
+			{
+				marqueurs.map += pion3;
+			}
+			else
+			{
+				marqueurs.map += vide;
+			}
+		}
+		marqueurs.map += "</tr>";
+	}
+	marqueurs.map += "</table>";
+	console.log(marqueurs.map);
 
-module.exports = map
+};
+
+module.exports = map_afficher;
+
