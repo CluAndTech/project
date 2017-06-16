@@ -97,7 +97,7 @@ var map_afficher = function(host)
 		marqueurs.map += "</tr>";
 	}
 	marqueurs.map += "</table>";
-	console.log(marqueurs.map);
+	return marqueurs.map;
 
 };
 
