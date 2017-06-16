@@ -36,12 +36,12 @@ var jeu = function(req,res,query){
 
 	if (query.compte === game.vivant[game.actif]){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
+		marqueurs.map = map_afficher(query.hote);
 	}else {
 		page = fs.readFileSync("plateau_passif.html", "utf-8");
 
 		marqueurs.map = map_afficher(query.hote);
 		marqueurs.cards = afficher_carte(query.hote, query.compte);
-		console.log("z");
 	}
 
 	if (query.action === "deplacer"){
@@ -60,10 +60,8 @@ var jeu = function(req,res,query){
 
 		y = game.position[game.actif][0];
 		x = game.position[game.actif][1];
-		console.log(x);
-		console.log(y);
 		marqueurs.map = map(z,x,y,query);
-		page = fs.readFileSync("map_fantome.html","utf-8");
+		page = fs.readFileSync("map_deplacer.html","utf-8");
 	}
 	else if (query.action === "deplacement"){
 		var compte = query.compte;
@@ -128,7 +126,7 @@ var jeu = function(req,res,query){
 		verif = game.cartes[(game.actif + 1)%3];
 		a = 0;
 
-		for(i=0; i<verif.length-1; i++){
+		for(i=0; i<verif.length; i++){
 
 			if(query.characters === verif[i]){	
 				x[a] = verif[i];	
@@ -147,7 +145,7 @@ var jeu = function(req,res,query){
 			verif = game.cartes[(game.actif + 2)%3];
 			a = 0;
 
-			for(i=0; i<verif.length-1; i++){
+			for(i=0; i<verif.length; i++){
 
 				if(query.characters === verif[i]){
 					x[a] = verif[i];
@@ -164,27 +162,29 @@ var jeu = function(req,res,query){
 		}
 		for(i=0; i<x.length;i++){
 			console.log(x[i])
-			}
+		}
 
 		if(x.length === 0){
 			marqueurs.result = "Aucune carte que vous soupçonner n'est dans les mains des joueurs";
+			next_turn(query.hote);
 		}else{
 
-		max = x.length -1;
-		min = 0;
-		a = Math.floor(Math.random()*(max - min)) + min;
-		marqueurs.result = "La cartes est" + x[a];
+			max = x.length;
+			min = 0;
+			a = Math.floor(Math.random()*(max - min)) + min;
+			marqueurs.result = "La cartes est" + x[a];
+			next_turn(query.hote);
 		}
 		page = fs.readFileSync("map_resultat_soupcon.html","utf-8");
 
-				}
+	}
 
-				page = page.supplant(marqueurs);
-				res.write(page);
-				res.end();
+	page = page.supplant(marqueurs);
+	res.write(page);
+	res.end();
 
-				};
+};
 
-				module.exports = jeu;
+module.exports = jeu;
 
 
