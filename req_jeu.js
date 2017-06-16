@@ -72,7 +72,7 @@ var jeu = function(req,res,query){
 		var y = query.y;
 		var game = fs.readFileSync(hote+".json","UTF-8");
 		var position;
-		
+
 		console.log("marqueurs = " + marqueurs);
 
 		game = JSON.parse(game);
@@ -106,27 +106,85 @@ var jeu = function(req,res,query){
 		marqueurs.c = c;
 		marqueurs.p = p;
 		marqueurs.w = w;
-		console.log(marqueurs.c + "d");
-		console.log(marqueurs.p + "d");
-		console.log(marqueurs.w + "d");
-		console.log(query.characters + "c");
-		console.log(query.place + "c");
-		console.log(query.weapon + "c");
 		if(query.characters === c && query.weapon === w && query.place === p){
-			page = fs.readFileSync("Victoire.html","UTF-8");
+			page = fs.readFileSync("victoire.html","UTF-8");
 		} else {
-			page = fs.readFileSync("Defaite.html","UTF-8");
+			page = fs.readFileSync("defaite.html","UTF-8");
 		}
 
 	}
+	else if(query.action === "soupconner"){
 
+		var game = fs.readFileSync(query.hote+".json",game,"UTF-8");
+		var i;
+		var x = [];
+		var a;
+		var result;
+		var min;
+		var max;
+		var verif;
 
-	page = page.supplant(marqueurs);
-	res.write(page);
-	res.end();
+		game = JSON.parse(game);
+		verif = game.cartes[(game.actif + 1)%3];
+		a = 0;
 
-};
+		for(i=0; i<verif.length-1; i++){
 
-module.exports = jeu;
+			if(query.characters === verif[i]){	
+				x[a] = verif[i];	
+				a++;
+			}else if(query.weapon === verif[i]){
+				x[a] = verif[i];
+				a++;
+			}else if(query.place === verif[i]){
+				x[a] = verif[i];
+				a++;
+			}
+		}
+
+		if(x.length === 0){
+
+			verif = game.cartes[(game.actif + 2)%3];
+			a = 0;
+
+			for(i=0; i<verif.length-1; i++){
+
+				if(query.characters === verif[i]){
+					x[a] = verif[i];
+					a++;
+				}else if(query.weapon === verif[i]){
+					x[a] = verif[i];
+					a++;
+				}else if(query.place === verif[i]){
+					x[a] = verif[i];
+					a++;
+				}
+			}
+
+		}
+		for(i=0; i<x.length;i++){
+			console.log(x[i])
+			}
+
+		if(x.length === 0){
+			marqueurs.result = "Aucune carte que vous soupçonner n'est dans les mains des joueurs";
+		}else{
+
+		max = x.length -1;
+		min = 0;
+		a = Math.floor(Math.random()*(max - min)) + min;
+		marqueurs.result = "La cartes est" + x[a];
+		}
+		page = fs.readFileSync("map_resultat_soupcon.html","utf-8");
+
+				}
+
+				page = page.supplant(marqueurs);
+				res.write(page);
+				res.end();
+
+				};
+
+				module.exports = jeu;
 
 

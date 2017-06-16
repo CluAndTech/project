@@ -1,4 +1,4 @@
-<!-- map_soupcon.html -->
+<!-- map_accusation.html -->
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,40 @@
 </br>
 </br>
 
-<button>Soupçonner<button>
-
+<form action="/jeu" method="GET">
+Je soupçonne<select name="characters">
+<option value="dorignac">Mme Dorignac</option>   
+<option value="thire">Mr Thiré</option>
+<option value="sanchez">Mr Sanchez</option>
+<option value="danesi">Mme Danesi</option>
+<option value="lallite">Mr Lalitte</option>
+<option value="fripiat">Mr Fripiat</option>
+<select>
+d'avoir assassiné avec 
+<select name="weapon">
+<option value="dictionnaire">un Dictionnaire</option>
+<option value="ordianateur">un Ordinateur</option>
+<option value="chaise">une Chaise</option>
+<option value="RJ45">un Cable RJ45</option>
+<option value="extincteur">un Extincteur</option>
+<option value="3310">un Nokia 3310</option>
+<select>
+dans
+<select name="place">
+<option value="open_space">l'Open Space</option>
+<option value="administration">l'Administration</option>
+<option value="salle_cours">la Salle de cour</option>
+<option value="buvette">la Buvette</option>
+<option value="salle_informatique">la Salle informatique</option>
+<option value="salle_serveur">la Salle des serveurs</option>
+<option value="exterieur">la Cour</option>
+<option value="toilettes">les Toilettes</option>
+<option value="bureaux_prof">les Bureaux des profs de l'ESIEA</option>
+<select>
+<input type="hidden" name="compte" value={compte}>
+<input type="hidden" name="hote" value={hote}>
+<input type="hidden" name="action" value=soupconner>
+<button>Soupçonner</button>
+</form>
 </body>
 </html>
