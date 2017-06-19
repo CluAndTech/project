@@ -25,6 +25,8 @@ var jeu = function(req,res,query){
 	var idx;
 	var FirstD;
 	var SecondD;
+	var historique ={};
+
 	marqueurs.FirstD = "";
 	marqueurs.SecondD = "";
 	marqueurs.total = "";
@@ -38,10 +40,20 @@ var jeu = function(req,res,query){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
 		marqueurs.map = map_afficher(query.hote);
 	}else {
+		historique = fs.readFileSync("historique.json","utf-8");
+			if(historique === undefined || historique === ""){
+			page = fs.readFileSync("plateau_passif.html", "utf-8");
+			marqueurs.map = map_afficher(query.hote);
+			marqueurs.cards = afficher_carte(query.hote, query.compte);
+			historique = "";
+			historique = fs.writeFileSync("historique.json",historique,"utf-8");
+		}else{
 		page = fs.readFileSync("plateau_passif.html", "utf-8");
-
+		historique = JSON.parse(historique);
 		marqueurs.map = map_afficher(query.hote);
 		marqueurs.cards = afficher_carte(query.hote, query.compte);
+		marqueurs.historique = historique;
+	}
 	}
 
 	if (query.action === "deplacer"){
@@ -54,6 +66,13 @@ var jeu = function(req,res,query){
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
 		z = marqueurs.FirstD + marqueurs.SecondD;
 		marqueurs.total ="Vous pouvez vous deplacez de " + z;
+		
+		historique = fs.readFileSync("historique.json","utf-8");
+		historique += query.compte + " se deplace de " + z;
+		historique += "<br/>";
+		historique = JSON.stringify(historique);
+		historique = fs.writeFileSync("historique.json", historique,"utf-8");
+
 
 		game = fs.readFileSync(query.hote + ".json", "UTF-8");
 		game = JSON.parse(game);
