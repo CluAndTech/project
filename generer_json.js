@@ -1,8 +1,3 @@
-/*
-**	generer_json.js
-*/
-
-
 "use strict";
 var fs = require("fs");
 var cartes = {};
@@ -144,7 +139,7 @@ var vivant = function(hote,joueurs){
 
 var position = function (pos) {
 	pos = [];
-	
+
 	pos[0] = [7, 1];
 	pos[1] = [1,17];
 	pos[2] = [17, 23];

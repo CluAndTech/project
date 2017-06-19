@@ -40,6 +40,7 @@ var map_afficher = function(n,l,c,query)
 	var pion1 = "<img src=\"pion1.png\"/>";
 	var pion2 = "<img src=\"pion2.png\"/>";
 	var pion3 = "<img src=\"pion3.png\"/>";
+	var croix = "<img src=\"croix.png\"/>";
 
 	var mur = "<td style='background-image: url(mur.png)'>"
 	var couloir = "<td style='background-image: url(couloir.png)'>";
@@ -93,7 +94,7 @@ var map_afficher = function(n,l,c,query)
 			}
 			else if(grille2[y][x] === 2)
 			{
-	                        marqueurs.map += "<a href=\"/jeu?action=deplacement&x="+x+"&y="+y+"&compte="+query.compte+"&hote="+query.hote+"\">"+"<img src=\"pion3.png\"</a>";
+	                        marqueurs.map += "<a href=\"/jeu?action=deplacement&x="+x+"&y="+y+"&compte="+query.compte+"&hote="+query.hote+"\">"+"<img src=\"croix.png\"</a>";
 			}
 			else
 			{
