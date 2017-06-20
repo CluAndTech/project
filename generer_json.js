@@ -150,10 +150,16 @@ var position = function (pos) {
 var generer_json = function(hote, joueurs){
 	var scenario = generer_scenario(cartes_copie);
 	var game = distribuer_carte(cartes_copie);
+	var i;
 	game.scenario = scenario;
 	game.vivant = vivant(hote, joueurs);
 	game.actif = 0;
 	game.position = position(game.position);
+	game.mort = [];
+	game.historique ={};
+	for(i = 0; i<joueurs.length; i++){
+		game.historique[joueurs[i]] = [];
+	}
 	game = JSON.stringify(game);
 	fs.writeFileSync(hote+".json", game, "UTF-8");
 
