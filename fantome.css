@@ -10,3 +10,7 @@ table
 {
 border-collapse:collapse;
 }
+img
+{ 
+float: right;
+}

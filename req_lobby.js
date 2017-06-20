@@ -105,6 +105,7 @@ var creer = function (req, res, query) {
 		lobby = fs.readFileSync("lobby.json", "UTF-8");
 		lobby = JSON.parse(lobby);
 		lobby[hote].etat="en_cours";
+		console.log("lobby de hote : "+ lobby[hote].joueurs);
 		generer_json(hote, lobby[hote].joueurs);
 		lobby = JSON.stringify(lobby);
 		fs.writeFileSync("lobby.json", lobby, "UTF-8");

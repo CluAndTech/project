@@ -26,6 +26,7 @@ var jeu = function(req,res,query){
 	var FirstD;
 	var SecondD;
 	var historique ={};
+	var compte = query.compte;
 
 	marqueurs.FirstD = "";
 	marqueurs.SecondD = "";
@@ -40,20 +41,18 @@ var jeu = function(req,res,query){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
 		marqueurs.map = map_afficher(query.hote);
 	}else {
-		historique = fs.readFileSync("historique.json","utf-8");
-			if(historique === undefined || historique === ""){
-			page = fs.readFileSync("plateau_passif.html", "utf-8");
-			marqueurs.map = map_afficher(query.hote);
-			marqueurs.cards = afficher_carte(query.hote, query.compte);
-			historique = "";
-			historique = fs.writeFileSync("historique.json",historique,"utf-8");
-		}else{
+		game = fs.readFileSync(query.hote + ".json","utf-8");
 		page = fs.readFileSync("plateau_passif.html", "utf-8");
-		historique = JSON.parse(historique);
+		game = JSON.parse(game);
 		marqueurs.map = map_afficher(query.hote);
 		marqueurs.cards = afficher_carte(query.hote, query.compte);
-		marqueurs.historique = historique;
-	}
+		if(game.historique[compte][0] !== undefined)
+		{
+			marqueurs.historique = "<p>"+game.historique[compte][0]+"</p>";
+		}
+		for(idx = 1; idx<game.historique[compte].length;idx++){
+			marqueurs.historique += "<p>"+game.historique[compte][idx]+"</p>";
+		}
 	}
 
 	if (query.action === "deplacer"){
@@ -66,20 +65,18 @@ var jeu = function(req,res,query){
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
 		z = marqueurs.FirstD + marqueurs.SecondD;
 		marqueurs.total ="Vous pouvez vous deplacez de " + z;
-		
-		historique = fs.readFileSync("historique.json","utf-8");
-		historique += query.compte + " se deplace de " + z;
-		historique += "<br/>";
-		historique = JSON.stringify(historique);
-		historique = fs.writeFileSync("historique.json", historique,"utf-8");
 
-
-		game = fs.readFileSync(query.hote + ".json", "UTF-8");
+		game = fs.readFileSync(query.hote+".json","utf-8");
 		game = JSON.parse(game);
+		console.log(game.historique[query.compte]);
+		game.historique[query.compte][game.historique[query.compte].length] = query.compte + " se deplace de " + z + "</br>";
 
+		console.log(game.historique[query.compte]);
 		y = game.position[game.actif][0];
 		x = game.position[game.actif][1];
 		marqueurs.map = map(z,x,y,query);
+		game = JSON.stringify(game);
+		game = fs.writeFileSync(query.hote+".json",game,"utf-8");
 		page = fs.readFileSync("map_deplacer.html","utf-8");
 	}
 	else if (query.action === "deplacement"){
@@ -125,8 +122,10 @@ var jeu = function(req,res,query){
 		marqueurs.w = w;
 		if(query.characters === c && query.weapon === w && query.place === p){
 			page = fs.readFileSync("victoire.html","UTF-8");
+
 		} else {
 			page = fs.readFileSync("defaite.html","UTF-8");
+
 		}
 
 	}
