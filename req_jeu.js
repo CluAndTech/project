@@ -69,7 +69,7 @@ var jeu = function(req,res,query){
 		game = fs.readFileSync(query.hote+".json","utf-8");
 		game = JSON.parse(game);
 		console.log(game.historique[query.compte]);
-		game.historique[query.compte][game.historique[query.compte].length] = query.compte + " se deplace de " + z + "</br>";
+		game.historique[query.compte][game.historique[query.compte].length] = query.compte + " se deplace de " + z;
 
 		console.log(game.historique[query.compte]);
 		y = game.position[game.actif][0];
@@ -125,7 +125,10 @@ var jeu = function(req,res,query){
 
 		} else {
 			page = fs.readFileSync("defaite.html","UTF-8");
-
+			game.mort = query.compte;
+			game = JSON.stringify(game);
+			game = fs.writeFileSync(query.hote+".json",game,"UTF-8");
+			next_turn(query.hote);
 		}
 
 	}
