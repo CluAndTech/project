@@ -27,6 +27,9 @@ var jeu = function(req,res,query){
 	var SecondD;
 	var historique ={};
 	var compte = query.compte;
+	var x;
+	var y;
+	var position;
 
 	marqueurs.FirstD = "";
 	marqueurs.SecondD = "";
@@ -39,6 +42,20 @@ var jeu = function(req,res,query){
 
 	if (query.compte === game.vivant[game.actif]){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
+		x = game.position[game.actif][0];
+		y = game.position[game.actif][1];
+		position = verif_salle(y,x);
+		if(position === "salle"){
+			marqueurs.button = "<form action=\"/jeu\" method=\"GET\">"
+				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
+				+"<input type=\"hidden\" name=\"hote\" value="+query.hote+">"
+				+"<input type=\"hidden\" name=\"x\" value ="+ x +">"
+				+"<input type=\"hidden\" name=\"y\" value ="+ y +">"
+				+"<button name=\"action\" value=\"deplacement\">rester dans la salle"+"</button>"
+				+"</form>"
+		}else{
+	marqueurs.button = "";
+		}
 		marqueurs.map = map_afficher(query.hote);
 		if(game.historique[compte][0] !== undefined)
 		{
@@ -142,13 +159,13 @@ var jeu = function(req,res,query){
 			game.gagnant = query.compte;
 			if(query.compte === game.gagnant){
 				page = fs.readFileSync("victoire.html","UTF-8");
-					actif = game.vivant[(game.actif + 1)%3];
-					game.perdant.push(actif);
-					actif = game.vivant[(game.actif + 2)%3];
-					game.perdant.push(actif);
-					game = JSON.stringify(game);
-					game = fs.writeFileSync(query.hote+".json",game,"utf-8");
-					next_turn(query.hote);
+				actif = game.vivant[(game.actif + 1)%3];
+				game.perdant.push(actif);
+				actif = game.vivant[(game.actif + 2)%3];
+				game.perdant.push(actif);
+				game = JSON.stringify(game);
+				game = fs.writeFileSync(query.hote+".json",game,"utf-8");
+				next_turn(query.hote);
 			}
 		}else {
 			page = fs.readFileSync("defaite.html","UTF-8");
@@ -235,18 +252,18 @@ var jeu = function(req,res,query){
 		page = fs.readFileSync("map_resultat_soupcon.html","utf-8");
 	}
 	for(idx = 0; idx<2;idx++){
-	game = fs.readFileSync(query.hote+".json","utf-8")
-	game = JSON.parse(game);
-	if(query.compte === game.perdant[idx]){
-		c = game.scenario[0];
-		p = game.scenario[1];
-		w = game.scenario[2];
-		marqueurs.c = c;
-		marqueurs.p = p;
-		marqueurs.w = w;	
-	page = fs.readFileSync("eliminer.html","utf-8");
-	next_turn(query.hote);
-	}
+		game = fs.readFileSync(query.hote+".json","utf-8")
+			game = JSON.parse(game);
+		if(query.compte === game.perdant[idx]){
+			c = game.scenario[0];
+			p = game.scenario[1];
+			w = game.scenario[2];
+			marqueurs.c = c;
+			marqueurs.p = p;
+			marqueurs.w = w;	
+			page = fs.readFileSync("eliminer.html","utf-8");
+			next_turn(query.hote);
+		}
 	}
 
 	page = page.supplant(marqueurs);
