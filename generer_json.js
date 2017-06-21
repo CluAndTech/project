@@ -156,6 +156,8 @@ var generer_json = function(hote, joueurs){
 	game.actif = 0;
 	game.position = position(game.position);
 	game.mort = [];
+	game.gagnant = [];
+	game.perdant = [];
 	game.historique ={};
 	for(i = 0; i<joueurs.length; i++){
 		game.historique[joueurs[i]] = [];
@@ -165,6 +167,6 @@ var generer_json = function(hote, joueurs){
 
 };
 
-//generer_json("dede", ["dede","melvin","dan"]);
+generer_json("dede", ["dede","melvin","dan"]);
 
 module.exports = generer_json;

@@ -122,6 +122,8 @@ var jeu = function(req,res,query){
 		var c;
 		var w;
 		var p;
+		var actif;
+		var fin;
 
 		game = JSON.parse(game);
 		c = game.scenario[0];
@@ -137,9 +139,18 @@ var jeu = function(req,res,query){
 		}
 
 		if(query.characters === c && query.weapon === w && query.place === p){
-			page = fs.readFileSync("victoire.html","UTF-8");
-
-		} else {
+			game.gagnant = query.compte;
+			if(query.compte === game.gagnant){
+				page = fs.readFileSync("victoire.html","UTF-8");
+					actif = game.vivant[(game.actif + 1)%3];
+					game.perdant.push(actif);
+					actif = game.vivant[(game.actif + 2)%3];
+					game.perdant.push(actif);
+					game = JSON.stringify(game);
+					game = fs.writeFileSync(query.hote+".json",game,"utf-8");
+					next_turn(query.hote);
+			}
+		}else {
 			page = fs.readFileSync("defaite.html","UTF-8");
 			game.mort = query.compte;
 			game = JSON.stringify(game);
@@ -222,6 +233,14 @@ var jeu = function(req,res,query){
 			next_turn(query.hote);
 		}
 		page = fs.readFileSync("map_resultat_soupcon.html","utf-8");
+	}
+	for(idx = 0; idx<2;idx++){
+	game = fs.readFileSync(query.hote+".json","utf-8")
+	game = JSON.parse(game);
+	if(query.compte === game.perdant[idx]){
+	page = fs.readFileSync("modele_accueil.html","utf-8");
+	next_turn(query.hote);
+	}
 	}
 
 	page = page.supplant(marqueurs);
