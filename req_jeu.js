@@ -40,6 +40,14 @@ var jeu = function(req,res,query){
 	if (query.compte === game.vivant[game.actif]){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
 		marqueurs.map = map_afficher(query.hote);
+		if(game.historique[compte][0] !== undefined)
+		{
+			marqueurs.historique = "<p>"+game.historique[compte][0]+"</p>";
+		}
+		for(idx = 1; idx<game.historique[compte].length;idx++){
+			marqueurs.historique += "<p>"+game.historique[compte][idx]+"</p>";
+		}
+
 	}else {
 		game = fs.readFileSync(query.hote + ".json","utf-8");
 		page = fs.readFileSync("plateau_passif.html", "utf-8");
@@ -64,13 +72,15 @@ var jeu = function(req,res,query){
 		marqueurs.FirstD = Number(Math.floor(Math.random()*6)+1);
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
 		z = marqueurs.FirstD + marqueurs.SecondD;
-		marqueurs.total ="Vous pouvez vous deplacez de " + z;
+		marqueurs.total ="<p>Vous pouvez vous deplacez de " + z+"</p>";
 
 		game = fs.readFileSync(query.hote+".json","utf-8");
 		game = JSON.parse(game);
 		console.log(game.historique[query.compte]);
-		game.historique[query.compte][game.historique[query.compte].length] = query.compte + " se deplace de " + z;
-
+		for(idx=0; idx<3; idx++)
+		{
+			game.historique[game.vivant[idx]][game.historique[game.vivant[idx]].length] = query.compte + " se deplace de " + z;
+		}
 		console.log(game.historique[query.compte]);
 		y = game.position[game.actif][0];
 		x = game.position[game.actif][1];
@@ -120,6 +130,12 @@ var jeu = function(req,res,query){
 		marqueurs.c = c;
 		marqueurs.p = p;
 		marqueurs.w = w;
+
+		for(idx=0; idx<3; idx++)
+		{
+			game.historique[game.vivant[idx]][game.historique[game.vivant[idx]].length] = query.compte + " accuse " + c + " avec " + w + " dans " + p;
+		}
+
 		if(query.characters === c && query.weapon === w && query.place === p){
 			page = fs.readFileSync("victoire.html","UTF-8");
 
@@ -146,6 +162,15 @@ var jeu = function(req,res,query){
 		game = JSON.parse(game);
 		verif = game.cartes[(game.actif + 1)%3];
 		a = 0;
+
+		for(idx=0; idx<3; idx++)
+		{
+			game.historique[game.vivant[idx]][game.historique[game.vivant[idx]].length] = query.compte + " soupconne " + query.characters + " avec " + query.weapon + " dans " + query.place;
+		}
+
+		game = JSON.stringify(game);
+		fs.writeFileSync(query.hote+".json",game,"UTF-8");
+		game = JSON.parse(game);
 
 		for(i=0; i<verif.length; i++){
 
@@ -197,7 +222,6 @@ var jeu = function(req,res,query){
 			next_turn(query.hote);
 		}
 		page = fs.readFileSync("map_resultat_soupcon.html","utf-8");
-
 	}
 
 	page = page.supplant(marqueurs);
