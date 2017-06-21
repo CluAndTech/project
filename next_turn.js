@@ -20,6 +20,10 @@ var next_turn = function(host){
 
 	game = JSON.stringify(game);
 	fs.writeFileSync(host + ".json", game, "UTF-8");
+	game = JSON.parse(game);
+	if(game.mort === game.vivant[game.actif]){
+		next_turn(host);
+	}
 
 }
 
