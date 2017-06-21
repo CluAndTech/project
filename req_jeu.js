@@ -37,21 +37,9 @@ var jeu = function(req,res,query){
 
 	var game = JSON.parse(fs.readFileSync(query.hote + ".json", "UTF-8"));
 
-	if(game.historique[compte].length > 10)
-	{
-		console.log("POUET");
-		game.historique[compte].splice(0, 1);
-		game = JSON.stringify(game);
-		fs.writeFileSync(query.hote+".json",game, "UTF-8")
-	}
-
-	game = fs.readFileSync(query.hote + ".json", "UTF-8");
-	game = JSON.parse(game);
-
 	if (query.compte === game.vivant[game.actif]){
 		page = fs.readFileSync("plateau_actif.html", "utf-8");
 		marqueurs.map = map_afficher(query.hote);
-
 		if(game.historique[compte][0] !== undefined)
 		{
 			marqueurs.historique = "<p>"+game.historique[compte][0]+"</p>";
@@ -250,7 +238,13 @@ var jeu = function(req,res,query){
 	game = fs.readFileSync(query.hote+".json","utf-8")
 	game = JSON.parse(game);
 	if(query.compte === game.perdant[idx]){
-	page = fs.readFileSync("modele_accueil.html","utf-8");
+		c = game.scenario[0];
+		p = game.scenario[1];
+		w = game.scenario[2];
+		marqueurs.c = c;
+		marqueurs.p = p;
+		marqueurs.w = w;	
+	page = fs.readFileSync("eliminer.html","utf-8");
 	next_turn(query.hote);
 	}
 	}
