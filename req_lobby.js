@@ -68,7 +68,7 @@ var creer = function (req, res, query) {
 			marqueurs.button = "<form action=\"/lobby\" method=\"GET\">"
 				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
 				+"<input type=\"hidden\" name=\"hote\" value="+query.hote+">"
-				+"<button name=\"action\" value=\"lancement\">Lancement "+"</button>"
+				+"<button name=\"action\" value=\"lancement\"><p1>Lancement</p1> "+"</button>"
 				+"</form>"
 
 		}

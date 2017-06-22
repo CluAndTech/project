@@ -4,6 +4,8 @@
 <html>
 
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+<link rel="stylesheet" href="compte.css" />
+
 
 <h2>Lobby :</h2>
 
@@ -11,10 +13,13 @@
 Bonjour <em>{compte}<em>
 </p>
 <br/>
-{lobby} {bouton}
+<p1>
+{lobby} 
+{bouton}
+</p1>
 <form action="/lobby" method="GET">
 <input type="hidden" name="compte" value={compte}>
-<button name="action" value="creer">Créer lobby</button>
+<button name="action" value="creer"><p1>Créer lobby</p1></button>
 </form>
 
 

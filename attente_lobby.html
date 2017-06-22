@@ -4,7 +4,10 @@
 <html>
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+
 <meta http-equiv="refresh" content="5; lobby?compte={compte}&hote={hote}&action=attendre">
+<link rel="stylesheet" href="compte.css" />
+
 </head>
 
 <h2>Lobby :</h2>
@@ -13,8 +16,10 @@
 Votre lobby : <em>{hote}<em>
 </p>
 <br/>
+<p1>
 Joueur(s) dans la partie :<br/>
 {joueurs}
+</p1>
 <form action="/lobby" method="GET">
 <input type="hidden" name="compte" value={compte}>
 <input type="hidden" name="hote" value={hote}>

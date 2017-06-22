@@ -59,7 +59,7 @@ var trait = function (req, res, query) {
 			marqueurs.bouton = "<form action=\"/lobby\" method=\"GET\">"
 				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
 				+"<input type=\"hidden\" name=\"hote\" value="+lobby.liste[0]+">"
-				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby.liste[0]+"</button>"
+				+"<button name=\"action\" value=\"rejoindre\"><p1>rejoindre "+lobby.liste[0]+"</p1></button>"
 				+"</form>"
 		}
 		for(idx=1; idx<lobby.liste.length; idx++)
@@ -68,7 +68,7 @@ var trait = function (req, res, query) {
 			marqueurs.bouton += "<form action=\"/lobby\" method=\"GET\">"
 				+"<input type=\"hidden\" name=\"compte\" value="+query.compte+">"
 				+"<input type=\"hidden\" name=\"hote\" value="+lobby.liste[idx]+">"
-				+"<button name=\"action\" value=\"rejoindre\">rejoindre "+lobby.liste[idx]+"</button>"
+				+"<button name=\"action\" value=\"rejoindre\"><p1>rejoindre "+lobby.liste[idx]+"</p1></button>"
 				+"</form>"
 
 		}
