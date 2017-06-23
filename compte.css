@@ -1,0 +1,49 @@
+p
+{
+	color : red;
+	font-size : 35px;
+}
+p1
+{
+	font-size : 30px;
+}
+h2
+{
+	color : #063d56;
+	font-size : 75px;
+}
+input
+{
+	width : 180px;
+}
+button
+{
+	height : 100px;
+}
+.button
+{
+	background-color: green;
+    border: none;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.button1
+{
+	background-color: yellow;
+    border: none;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+body
+{
+	text-align: center;
+	background-color: #53c155
+}
