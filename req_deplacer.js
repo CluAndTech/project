@@ -4,7 +4,6 @@
 */
 "use strict";
 
-var kbd = require ('kbd');
 var grille;
 var grille_ca;
 var cd;                    // case depart
