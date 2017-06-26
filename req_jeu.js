@@ -16,6 +16,7 @@ var verif_salle = require("./verif_salle.js");
 var afficher_carte = require("./afficher_carte.js");
 var next_turn = require("./next_turn.js");
 var map_wait = require("./map_wait.js");
+var my_random = require("./my_random.js");
 
 
 var jeu = function(req,res,query){
@@ -86,9 +87,10 @@ var jeu = function(req,res,query){
 		var y;
 		var z;
 
-		marqueurs.FirstD = Number(Math.floor(Math.random()*6)+1);
+        marqueurs.FirstD = Number(Math.floor(Math.random() * 6) + 1);
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
-		z = marqueurs.FirstD + marqueurs.SecondD;
+        z = marqueurs.FirstD + marqueurs.SecondD;
+        z = Number(my_random());
 		marqueurs.total ="<p>Vous pouvez vous deplacez de " + z+"</p>";
 
 		game = fs.readFileSync(query.hote+".json","utf-8");

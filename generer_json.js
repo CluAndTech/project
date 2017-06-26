@@ -33,15 +33,18 @@ var generer_scenario = function(cartes_copie){
 	var scenario = [];
 	var random;
 
-	random = Math.floor(Math.random() * 6);
+    random = Math.floor(Math.random() * 6);
+    random = 1;
 	scenario[0] = cartes_copie.personnages[random];
 	cartes_copie.personnages.splice(random,1);
 
-	random = Math.floor(Math.random() * 9);
+    random = Math.floor(Math.random() * 9);
+    random = 4;
 	scenario[1] = cartes_copie.lieux[random];
 	cartes_copie.lieux.splice(random,1);
 
-	random = Math.floor(Math.random() * 6);
+    random = Math.floor(Math.random() * 6);
+    random = 3;
 	scenario[2] = cartes_copie.armes[random];
 	cartes_copie.armes.splice(random,1);
 
