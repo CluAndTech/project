@@ -1,16 +1,55 @@
+#cartes {
+	float: left;
+	margin-left: 20px;
+}
+#map {
+	float: left;
+}
+#boutonL
+{
+	position: absolute;
+	bottom: 500px;
+}
 html
 {
-Line-Height: 0;
+	Line-Height: 0;
 }
+p
+{
+	color : red;
+	font-size : 35px;
+}
+p1
+{
+	font-size : 30px;
+}
+h2
+{
+	color : #063d56;
+	font-size : 75px;
+}
+input
+{
+	width : 180px;
+}
+button
+{
+	height : 100px;
+}
+body
+{
+	text-align: center;
+	background-color: #53c155
+}
+
 tr
 {
-border:0px;
+	border:0px;
 }
 table
 {
-border-collapse:collapse;
+	border-collapse:collapse;
 }
-img
-{ 
-float: right;
+img {
+	margin: 5px;
 }

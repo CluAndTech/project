@@ -170,6 +170,6 @@ var generer_json = function(hote, joueurs){
 
 };
 
-//generer_json("dede", ["dede","melvin","dan"]);
+generer_json("dede", ["dede","melvin","dan"]);
 
 module.exports = generer_json;

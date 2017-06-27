@@ -2,27 +2,33 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-<link rel="stylesheet" href="fantome.css" />
-</head>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+		<link rel="stylesheet" href="fantome.css" />
+	</head>
 
-<body>
+	<body>
 
-{map}
+		<div id="map">
+			{map}
+		</div>
 
-<form action="jeu" method="GET">
-<button>Lancer Les dés </button>
-<input type="hidden" name="compte" value={compte}>
-<input type="hidden" name="hote" value={hote}>
-<input type="hidden" name="action" value="deplacer">
-</form>
-<br/>
-{cartes}
-<br/>
-{button}
-</br>
-{historique}
+		<div id="cartes">
+			{cartes}
+		</div>
+
+		<div id="boutonL">
+			<form action="jeu" method="GET">
+				<button>Lancer Les dés </button>
+				<input type="hidden" name="compte" value={compte}>
+				<input type="hidden" name="hote" value={hote}>
+				<input type="hidden" name="action" value="deplacer">
+			</form>
+		</div>
+		<p>
+		{button}
+		<p>
+		{historique}
 
 
 </html>

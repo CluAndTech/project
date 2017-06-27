@@ -26,6 +26,9 @@ var afficher_carte = function(host, account)
 
 	marqueurs.cartes = "";
     for(i=0; i < cartes.length; i++){
+	    	if(i !==0 && i%2 === 0) {
+			marqueurs.cartes += "<p>";
+		}
 		marqueurs.cartes += "<img src='./cartes/" + cartes[i] + ".jpg'>";
 	}	
 	return marqueurs.cartes;
