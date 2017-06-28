@@ -7,8 +7,13 @@
 }
 #boutonL
 {
-	position: absolute;
-	bottom: 500px;
+	clear:both;
+	position: relative;
+	text-align: left;
+}
+.centre
+{
+	display: block;
 }
 html
 {

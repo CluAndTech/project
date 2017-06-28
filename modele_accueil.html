@@ -3,29 +3,29 @@
 <!DOCTYPE html>
 <html>
 
-<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-<link rel="stylesheet" href="compte.css" />
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<link rel="stylesheet" href="compte.css" />
 
-<h2>Clu&Tech</h2>
+	<h2>Clu&Tech</h2>
 
-{erreur}
+	{erreur}
 
-<p/>
+	<p>
 
-<form action="/req_identifier" method="GET"> 
-    Identifiant : 
-<input type="text" name="compte" value="{compte}"> 
-<br/>
-    Mot de passe :
-<input type="password" name="mdp" value="">
-<br/>
-<input type="submit" name="action" value="Se connecter">
-</form>
+	<form action="/req_identifier" method="GET">	
+		<div class="centre">
+		Identifiant : 
+		<input type="text" name="compte" value="{compte}"> 
+		<br>
+		Mot de passe :
+		<input type="password" name="mdp" value="">
+		</div>
+		<br>
+		<button name="" value="">Se connecter</button>
+	</form>
 
-<p/>
-
-<form action="/req_afficher_formulaire_inscription" method="GET">
-<button name="action" value="creer">Créer compte</button>
-</form>
+	<form action="/req_afficher_formulaire_inscription" method="GET">
+		<button name="action" value="creer">Créer compte</button>
+	</form>
 
 </html>
