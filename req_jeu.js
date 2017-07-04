@@ -90,7 +90,7 @@ var jeu = function(req,res,query){
         marqueurs.FirstD = Number(Math.floor(Math.random() * 6) + 1);
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
         z = marqueurs.FirstD + marqueurs.SecondD;
-        z = Number(my_random());
+       	//z = Number(my_random());
 		marqueurs.total ="<p>Vous pouvez vous deplacez de " + z+"</p>";
 
 		game = fs.readFileSync(query.hote+".json","utf-8");
@@ -171,7 +171,8 @@ var jeu = function(req,res,query){
 			}
 		}else {
 			page = fs.readFileSync("defaite.html","UTF-8");
-			game.mort = query.compte;
+			game.mort.push(query.compte);
+			game.position[game.actif] = [13,10];
 			game = JSON.stringify(game);
 			game = fs.writeFileSync(query.hote+".json",game,"UTF-8");
 			next_turn(query.hote);
@@ -248,7 +249,7 @@ var jeu = function(req,res,query){
 			max = x.length;
 			min = 0;
 			a = Math.floor(Math.random()*(max - min)) + min;
-			marqueurs.result = "La cartes est" + x[a];
+			marqueurs.result = "La cartes est    " + "<img src='./cartes/" + x[a] + ".jpg'>";
 			next_turn(query.hote);
 		}
 		page = fs.readFileSync("map_resultat_soupcon.html","utf-8");
