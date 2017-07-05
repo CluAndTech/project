@@ -37,7 +37,7 @@ var jeu = function(req,res,query){
 	marqueurs.total = "";
 	marqueurs.compte = query.compte;
 	marqueurs.hote = query.hote;
-	marqueurs.cartes = afficher_carte(query.hote);
+	marqueurs.cartes = afficher_carte(query.hote, query.compte);
 
 	var game = JSON.parse(fs.readFileSync(query.hote + ".json", "UTF-8"));
 
