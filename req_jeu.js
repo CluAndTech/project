@@ -55,7 +55,7 @@ var jeu = function(req,res,query){
 				+"<button name=\"action\" value=\"deplacement\">rester dans la salle"+"</button>"
 				+"</form>"
 		}else{
-	marqueurs.button = "";
+			marqueurs.button = "";
 		}
 		marqueurs.map = map_afficher(query.hote);
 		if(game.historique[compte][0] !== undefined)
@@ -64,6 +64,10 @@ var jeu = function(req,res,query){
 		}
 		for(idx = 1; idx<game.historique[compte].length;idx++){
 			marqueurs.historique += "<p>"+game.historique[compte][idx]+"</p>";
+		}
+		if(game.historique[compte][0] === undefined)
+		{
+			marqueurs.historique = "";
 		}
 
 	}else {
@@ -79,6 +83,11 @@ var jeu = function(req,res,query){
 		for(idx = 1; idx<game.historique[compte].length;idx++){
 			marqueurs.historique += "<p>"+game.historique[compte][idx]+"</p>";
 		}
+		if(game.historique[compte][0] === undefined)
+		{
+			marqueurs.historique = "";
+		}
+
 	}
 
 	if (query.action === "deplacer"){
@@ -87,10 +96,10 @@ var jeu = function(req,res,query){
 		var y;
 		var z;
 
-        marqueurs.FirstD = Number(Math.floor(Math.random() * 6) + 1);
+		marqueurs.FirstD = Number(Math.floor(Math.random() * 6) + 1);
 		marqueurs.SecondD = Number(Math.floor(Math.random()*6)+1);
-        z = marqueurs.FirstD + marqueurs.SecondD;
-       	//z = Number(my_random());
+		z = marqueurs.FirstD + marqueurs.SecondD;
+		//z = Number(my_random());
 		marqueurs.total ="<p>Vous pouvez vous deplacez de " + z+"</p>";
 
 		game = fs.readFileSync(query.hote+".json","utf-8");
@@ -256,7 +265,7 @@ var jeu = function(req,res,query){
 	}
 	for(idx = 0; idx<2;idx++){
 		game = fs.readFileSync(query.hote+".json","utf-8")
-			game = JSON.parse(game);
+		game = JSON.parse(game);
 		if(query.compte === game.perdant[idx]){
 			c = game.scenario[0];
 			p = game.scenario[1];
